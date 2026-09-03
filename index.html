@@ -1,53 +1,224 @@
 <!doctype html>
 <html lang="id">
-<head>
+<head><style>
+@font-face {
+  font-family: "Optimistic";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("/fonts/OptimisticAI_VF_Optimized.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Optimistic Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/OptimisticMono_W_TextRegular.woff2") format("woff2");
+}
+:where(html) {
+  font-family: "Optimistic", system-ui, sans-serif;
+}
+:where(code, pre, kbd, samp) {
+  font-family: "Optimistic Mono", ui-monospace, monospace;
+}
+</style>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Portal Verifikasi — Langgeng Family Mojokerto</title>
 <style>
-:root{--bg:#090909;--card:#121212;--gold:#d8a83e;--gold2:#f3d27a;--text:#f4f4f4;--muted:#aaa;--line:#332711}
+:root{--bg:#090909;--card:#121212;--gold:#d8a83e;--gold2:#f3d27a;--text:#f4f4f4;--muted:#aaa;--line:#332711;--green:#50c878}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#241b0c 0,#090909 42%);color:var(--text);font-family:Arial,Helvetica,sans-serif;min-height:100vh}
-.wrap{max-width:720px;margin:auto;padding:28px 18px 50px}.brand{text-align:center;margin:8px 0 28px}
+.wrap{max-width:720px;margin:auto;padding:28px 18px 50px}
+.brand{text-align:center;margin:8px 0 28px;cursor:pointer;user-select:none}
 .logo{width:74px;height:74px;border:2px solid var(--gold);border-radius:20px;display:grid;place-items:center;margin:auto;color:var(--gold2);font-weight:900;font-size:26px;box-shadow:0 0 25px #d8a83e22}
 h1{font-size:25px;margin:15px 0 5px;letter-spacing:2px}.sub{color:var(--muted);font-size:13px;letter-spacing:2px}
-.card{background:linear-gradient(145deg,#171717,#0e0e0e);border:1px solid var(--line);border-radius:20px;padding:25px;box-shadow:0 20px 60px #0008}
+.card{background:linear-gradient(145deg,#171717,#0e0e0e);border:1px solid var(--line);border-radius:20px;padding:25px;box-shadow:0 20px 60px #0008;margin-bottom:18px}
 .search{display:flex;gap:10px;margin-bottom:20px}.search input{flex:1;background:#090909;border:1px solid #453619;color:#fff;border-radius:12px;padding:14px;font-size:15px}.search button{border:0;border-radius:12px;padding:0 20px;background:linear-gradient(135deg,var(--gold2),var(--gold));font-weight:800;cursor:pointer}
-.status{display:flex;align-items:center;gap:10px;border:1px solid #315a3a;background:#0d1b11;padding:12px 14px;border-radius:12px;color:#8fe0a0;font-weight:700;margin-bottom:20px}.dot{width:10px;height:10px;background:#50c878;border-radius:50%}
+.status{display:flex;align-items:center;gap:10px;border:1px solid #315a3a;background:#0d1b11;padding:12px 14px;border-radius:12px;color:#8fe0a0;font-weight:700;margin-bottom:16px}.dot{width:10px;height:10px;background:var(--green);border-radius:50%}
+.status.owner{border-color:#d8a83e;background:linear-gradient(90deg,#241b0c,#17130b);color:var(--gold2)}
+.badge-owner{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#000;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:900;letter-spacing:1px;margin-left:8px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.item{border-bottom:1px solid #272727;padding:11px 0}.label{color:var(--muted);font-size:11px;letter-spacing:1.4px;text-transform:uppercase}.value{font-size:16px;font-weight:700;margin-top:5px}
 .quote{margin-top:22px;padding:15px;border-left:3px solid var(--gold);background:#17130b;color:#ddd;font-size:14px;line-height:1.6}
 .footer{text-align:center;color:#777;font-size:11px;margin-top:22px;line-height:1.6}
 .hidden{display:none}.error{color:#ff9d9d;background:#241010;border:1px solid #552222;padding:13px;border-radius:12px}
+.admin-panel{border:1px dashed var(--gold);background:#1a160e;border-radius:16px;padding:18px;margin-top:20px}
+.admin-panel h3{margin:0 0 12px;color:var(--gold2);font-size:14px;letter-spacing:1.5px}
+.admin-panel input, .admin-panel select{width:100%;background:#090909;border:1px solid #453619;color:#fff;border-radius:10px;padding:12px;margin-bottom:10px;font-size:14px}
+.admin-panel button{width:100%;border:0;border-radius:10px;padding:12px;background:linear-gradient(135deg,var(--gold2),var(--gold));font-weight:800;cursor:pointer;margin-top:6px}
+.admin-list{margin-top:14px;max-height:240px;overflow:auto}
+.admin-list div{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #222;font-size:13px}
+.admin-actions{display:flex;gap:8px;margin-top:12px}
+.admin-actions button{flex:1}
 @media(max-width:520px){.grid{grid-template-columns:1fr}.search button{padding:0 15px}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="brand">
+  <div class="brand" onclick="secretTap()">
     <div class="logo">LF</div>
     <h1>LANGGENG FAMILY</h1>
     <div class="sub">MOJOKERTO • PORTAL VERIFIKASI ANGGOTA</div>
   </div>
+
   <div class="card">
     <form class="search" onsubmit="verify(event)">
       <input id="memberId" placeholder="Masukkan nomor anggota, contoh LF-0256-0826" autocomplete="off">
       <button type="submit">VERIFIKASI</button>
     </form>
     <div id="result" class="hidden"></div>
+    
+    <!-- ADMIN PANEL - Hanya muncul kalau login admin -->
+    <div id="adminPanel" class="hidden">
+      <div class="admin-panel">
+        <h3>🔐 PANEL OWNER - BENNY AGUNG</h3>
+        <p style="color:#aaa;font-size:12px;margin:0 0 12px">Anda login sebagai <b style="color:var(--gold2)">PEMILIK / ADMIN PORTAL</b>. Kelola anggota di sini.</p>
+        <input id="newName" placeholder="Nama anggota baru">
+        <input id="newNumber" placeholder="Nomor anggota (contoh LF-0001-... )">
+        <select id="newLevel">
+          <option value="MEMBER">MEMBER</option>
+          <option value="PREMIUM MEMBER">PREMIUM MEMBER</option>
+          <option value="PENGURUS">PENGURUS</option>
+        </select>
+        <input id="newPlatform" placeholder="Platform: Maxim, inDrive, dll">
+        <button onclick="addMember()">+ TAMBAH ANGGOTA</button>
+        <div class="admin-actions">
+          <button onclick="exportData()" style="background:#222;color:var(--gold2);border:1px solid #444">EXPORT DATA</button>
+          <button onclick="logoutAdmin()" style="background:#331111;color:#ffaaaa;border:1px solid #553333">LOGOUT ADMIN</button>
+        </div>
+        <div id="adminList" class="admin-list"></div>
+      </div>
+    </div>
+
+    <!-- LOGIN ADMIN -->
+    <div id="loginAdmin" class="hidden">
+      <div class="admin-panel">
+        <h3>LOGIN OWNER</h3>
+        <input id="adminUser" placeholder="Username" value="benny">
+        <input id="adminPass" type="password" placeholder="Password (nomor anggota kamu)">
+        <button onclick="doLogin()">LOGIN SEBAGAI OWNER</button>
+        <p style="color:#777;font-size:11px;margin-top:10px">Hint: username = benny, password = LF-0256-0826</p>
+      </div>
+    </div>
   </div>
-  <div class="footer">Portal identitas anggota Langgeng Family Mojokerto.<br>Gunakan informasi ini untuk keperluan verifikasi keanggotaan.</div>
+
+  <div class="footer">
+    Portal identitas anggota Langgeng Family Mojokerto.<br>
+    Owner: <b style="color:var(--gold2)">Benny Agung LF-0256-0826</b> • Klik logo 5x untuk login admin.<br>
+    Gunakan informasi ini untuk keperluan verifikasi keanggotaan.
+  </div>
 </div>
+
 <script>
-const MEMBERS = {
+// === DATA AWAL ===
+const DEFAULT_MEMBERS = {
   "LF-0256-0826": {
     name:"Benny Agung",
     number:"LF-0256-0826",
     status:"AKTIF",
-    level:"PREMIUM MEMBER",
+    level:"PEMILIK / OWNER",
+    role:"owner",
     community:"Langgeng Family Mojokerto",
     platform:"Maxim • inDrive • Shopee • Grab • Gojek",
-    valid:"Sesuai data komunitas"
+    valid:"Seumur Hidup - Pemilik Portal"
   }
 };
+
+// Load dari localStorage (agar data anggota baru tetap ada)
+let MEMBERS = {...DEFAULT_MEMBERS};
+try{
+  const saved = localStorage.getItem('lf_members');
+  if(saved){ MEMBERS = {...MEMBERS, ...JSON.parse(saved)}; }
+}catch(e){}
+
+const OWNER = {
+  username:"benny",
+  password:"LF-0256-0826",
+  memberId:"LF-0256-0826"
+};
+
+let tapCount=0;
+function secretTap(){
+  tapCount++;
+  if(tapCount>=5){
+    tapCount=0;
+    showLogin();
+  }
+  setTimeout(()=>tapCount=0,3000);
+}
+
+function showLogin(){
+  document.getElementById('loginAdmin').className='';
+  document.getElementById('adminPanel').className='hidden';
+}
+
+function doLogin(){
+  const u = document.getElementById('adminUser').value.trim().toLowerCase();
+  const p = document.getElementById('adminPass').value.trim().toUpperCase();
+  if(u===OWNER.username && p===OWNER.password){
+    localStorage.setItem('lf_admin','1');
+    document.getElementById('loginAdmin').className='hidden';
+    document.getElementById('adminPanel').className='';
+    renderAdminList();
+    alert('Login berhasil! Selamat datang Owner Benny Agung');
+  }else{
+    alert('Username/password salah! Username: benny, Password: LF-0256-0826');
+  }
+}
+
+function logoutAdmin(){
+  localStorage.removeItem('lf_admin');
+  document.getElementById('adminPanel').className='hidden';
+  alert('Logout admin');
+}
+
+function saveMembers(){
+  localStorage.setItem('lf_members', JSON.stringify(MEMBERS));
+}
+
+function addMember(){
+  const name=document.getElementById('newName').value.trim();
+  const number=document.getElementById('newNumber').value.trim().toUpperCase();
+  const level=document.getElementById('newLevel').value;
+  const platform=document.getElementById('newPlatform').value.trim()||"Maxim • inDrive";
+  if(!name||!number){ alert('Isi nama dan nomor!'); return; }
+  MEMBERS[number]={
+    name, number, level,
+    status:"AKTIF",
+    role:"member",
+    community:"Langgeng Family Mojokerto",
+    platform,
+    valid:"Sesuai data komunitas"
+  };
+  saveMembers();
+  document.getElementById('newName').value='';
+  document.getElementById('newNumber').value='';
+  renderAdminList();
+  alert('Anggota '+name+' ditambahkan!');
+}
+
+function deleteMember(num){
+  if(num===OWNER.memberId){ alert('Tidak bisa hapus OWNER!'); return; }
+  if(confirm('Hapus '+num+'?')){
+    delete MEMBERS[num];
+    saveMembers();
+    renderAdminList();
+  }
+}
+
+function renderAdminList(){
+  const list=document.getElementById('adminList');
+  let html='';
+  Object.values(MEMBERS).forEach(m=>{
+    html+=`<div><span><b>${m.number}</b> - ${m.name} ${m.role==='owner'?'👑':''}</span><span onclick="deleteMember('${m.number}')" style="color:#ff6666;cursor:pointer">Hapus</span></div>`;
+  });
+  list.innerHTML=html;
+}
+
+function exportData(){
+  const dataStr="data:text/json;charset=utf-8,"+encodeURIComponent(JSON.stringify(MEMBERS,null,2));
+  const a=document.createElement('a'); a.href=dataStr; a.download='anggota-langgeng-family.json'; a.click();
+}
+
 function verify(e){
   if(e) e.preventDefault();
   const id=document.getElementById("memberId").value.trim().toUpperCase();
@@ -58,21 +229,30 @@ function verify(e){
     box.innerHTML='<div class="error">Data anggota tidak ditemukan. Periksa kembali nomor KTA.</div>';
     return;
   }
+  const isOwner = m.role==='owner';
   box.className="";
   box.innerHTML=`
-    <div class="status"><span class="dot"></span> ${m.status} — DATA TERVERIFIKASI</div>
+    <div class="status ${isOwner?'owner':''}"><span class="dot" style="${isOwner?'background:var(--gold)':''}"></span> ${m.status} — ${isOwner?'PEMILIK PORTAL':'DATA TERVERIFIKASI'} ${isOwner?'<span class="badge-owner">OWNER</span>':''}</div>
     <div class="grid">
-      <div class="item"><div class="label">Nama Anggota</div><div class="value">${m.name}</div></div>
+      <div class="item"><div class="label">Nama Anggota</div><div class="value">${m.name} ${isOwner?'👑':''}</div></div>
       <div class="item"><div class="label">Nomor Anggota</div><div class="value">${m.number}</div></div>
       <div class="item"><div class="label">Status</div><div class="value">${m.level}</div></div>
       <div class="item"><div class="label">Komunitas</div><div class="value">${m.community}</div></div>
       <div class="item"><div class="label">Platform</div><div class="value">${m.platform}</div></div>
       <div class="item"><div class="label">Masa Berlaku</div><div class="value">${m.valid}</div></div>
     </div>
-    <div class="quote">KTA ini merupakan identitas anggota Langgeng Family Mojokerto. Verifikasi dilakukan melalui nomor anggota yang tercantum pada KTA.</div>`;
+    <div class="quote">${isOwner?'Akun ini adalah PEMILIK & ADMIN UTAMA portal Langgeng Family Mojokerto. Memiliki akses penuh untuk mengelola semua anggota.':'KTA ini merupakan identitas anggota Langgeng Family Mojokerto. Verifikasi dilakukan melalui nomor anggota yang tercantum pada KTA.'}</div>`;
 }
+
+// Auto-login check
+if(localStorage.getItem('lf_admin')){
+  document.getElementById('adminPanel').className='';
+  setTimeout(renderAdminList,100);
+}
+
 const params=new URLSearchParams(location.search);
 if(params.get("id")){document.getElementById("memberId").value=params.get("id");verify();}
+if(params.get("admin")==="1"){ showLogin(); }
 </script>
-</body>
+<script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script></body>
 </html>
