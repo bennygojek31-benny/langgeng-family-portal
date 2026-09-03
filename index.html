@@ -153,7 +153,32 @@ h1{font-size:28px;margin:12px 0 5px;letter-spacing:2px;text-align:center;color:v
     </div>
   </div>
 
-    <div class="footer">
+  
+  <!-- MODAL EDIT ANGGOTA - KETUA BISA EDIT TANPA LOGIN KE MASING-MASING -->
+  <div id="editModal" class="hidden" style="position:fixed;top:0;left:0;right:0;bottom:0;background:#000a;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px">
+    <div class="card" style="max-width:500px;width:100%;max-height:90vh;overflow:auto">
+      <h3 style="color:var(--gold2);margin:0 0 14px">✏️ EDIT ANGGOTA - KETUA AKSES LANGSUNG</h3>
+      <p style="display:none">hidden</p>
+      <div id="editResult" class="hidden" style="margin-bottom:10px"></div>
+      <div class="form-group"><label>Nomor Anggota (Tidak bisa diubah)</label><input id="editNumber" disabled style="opacity:0.5"></div>
+      <div class="form-group"><label>Nama Lengkap *</label><input id="editName" placeholder="Nama lengkap"></div>
+      <div class="form-group"><label>Email Driver *</label><input id="editEmail" type="email" placeholder="email"></div>
+      <div class="form-group"><label>WA *</label><input id="editWa" placeholder="WA"></div>
+      <div class="form-group"><label>Password *</label><input id="editPassword" type="text" placeholder="Password anggota"><small style="color:#666;font-size:10px;display:none">hidden</small></div>
+      <div class="form-group"><label>Platform</label><select id="editPlatform"><option value="Maxim">Maxim</option><option value="inDrive">inDrive</option><option value="Gojek">Gojek</option><option value="Grab">Grab</option><option value="Lalamove">Lalamove</option><option value="Shopee Food">Shopee Food</option></select></div>
+      <div class="form-group"><label>Level</label><select id="editLevel"><option value="MEMBER">MEMBER</option><option value="PREMIUM MEMBER">PREMIUM MEMBER</option><option value="PENGURUS">PENGURUS</option><option value="KETUA LANGGENG FAMILY MOJOKERTO">KETUA LANGGENG FAMILY MOJOKERTO</option><option value="SEKJEN PUSAT DPP">SEKJEN PUSAT DPP</option></select></div>
+      <div class="form-group"><label>Status</label><select id="editStatus"><option value="AKTIF">AKTIF</option><option value="NON-AKTIF">NON-AKTIF</option><option value="SUSPEND">SUSPEND</option></select></div>
+      <div style="display:flex;gap:8px;margin-top:14px">
+        <button class="btn" style="flex:1" onclick="saveEdit()">💾 SIMPAN - KETUA EDIT LANGSUNG</button>
+        <button onclick="closeEdit()" style="flex:1;background:#333;color:#fff;border:1px solid #555;padding:12px;border-radius:10px;cursor:pointer">BATAL</button>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button onclick="accessAsMember()" style="flex:1;background:linear-gradient(135deg,#6bb8ff,#4a9eff);color:#000;border:0;padding:10px;border-radius:10px;font-weight:700;cursor:pointer;font-size:11px">👁️ AKSES & LIHAT QR TANPA LOGIN</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
     Portal Resmi Langgeng Family Mojokerto © 2026<br>
     Ketua Langgeng Family Mojokerto: <b style="color:var(--gold2)">Benny Lefianto Sandi Agung</b> - WA 081333556398<br>
     Sekjen: <b style="color:#8ec2ff">Cundhamani Caraka Gana. SE</b> - WA 081249060309
@@ -377,12 +402,89 @@ function addMember(){
   MEMBERS[number]={name:name,number:number,email:email,password:passAdmin,status:"AKTIF",level:level,role:role,community: role==='sekjen'?'DPP Langgeng Family Pusat':'Langgeng Family Mojokerto',platform:platform,valid:"Aktif",wa:wa};
   saveMembers(); document.getElementById('newName').value=''; document.getElementById('newNumber').value=''; document.getElementById('newEmail').value=''; document.getElementById('newWa').value=''; document.getElementById('newPassAdmin').value=''; renderAll(); alert('Ditambahkan '+name+' - QR: '+number+' Pass: '+passAdmin);
 }
-function deleteMember(num){ const m=MEMBERS[num]; if(!m) return; if(m.role==='owner'){ alert('Tidak bisa hapus OWNER!'); return; } if(m.role==='sekjen' && currentAdmin && currentAdmin.role!=='owner'){ alert('Hanya Owner bisa hapus Sekjen!'); return; } if(confirm('Hapus '+num+'?')){ delete MEMBERS[num]; saveMembers(); renderAll(); } }
+let editingNumber = null;
+function editMember(num){
+  const m=MEMBERS[num]; if(!m) return;
+  editingNumber=num;
+  document.getElementById('editNumber').value=m.number;
+  document.getElementById('editName').value=m.name;
+  document.getElementById('editEmail').value=m.email||'';
+  document.getElementById('editWa').value=m.wa||'';
+  document.getElementById('editPassword').value=m.password||m.number;
+  document.getElementById('editPlatform').value=m.platform||'Maxim';
+  document.getElementById('editLevel').value=m.level||'MEMBER';
+  document.getElementById('editStatus').value=m.status||'AKTIF';
+  document.getElementById('editModal').className='';
+  document.getElementById('editResult').className='hidden';
+}
+
+function closeEdit(){
+  document.getElementById('editModal').className='hidden';
+  editingNumber=null;
+}
+
+function saveEdit(){
+  if(!editingNumber){ alert('Error!'); return; }
+  const m=MEMBERS[editingNumber]; if(!m){ alert('Data tidak ditemukan!'); return; }
+  const name=document.getElementById('editName').value.trim();
+  const email=document.getElementById('editEmail').value.trim().toLowerCase();
+  const wa=document.getElementById('editWa').value.trim();
+  const pass=document.getElementById('editPassword').value.trim();
+  const platform=document.getElementById('editPlatform').value;
+  const level=document.getElementById('editLevel').value;
+  const status=document.getElementById('editStatus').value;
+  const resultBox=document.getElementById('editResult');
+  
+  if(!name||!email||!wa||!pass){ resultBox.className='error'; resultBox.innerHTML='❌ Nama, Email, WA, Password wajib!'; return; }
+  if(!isValidEmail(email)){ resultBox.className='error'; resultBox.innerHTML='❌ Email tidak valid!'; return; }
+  if(pass.length < 6){ resultBox.className='error'; resultBox.innerHTML='❌ Password min 6 karakter!'; return; }
+  
+  // Ketua bisa edit tanpa login ke masing-masing anggota - langsung update
+  MEMBERS[editingNumber].name=name;
+  MEMBERS[editingNumber].email=email;
+  MEMBERS[editingNumber].wa=wa;
+  MEMBERS[editingNumber].password=pass;
+  MEMBERS[editingNumber].platform=platform;
+  MEMBERS[editingNumber].level=level;
+  MEMBERS[editingNumber].status=status;
+  
+  saveMembers();
+  renderAll();
+  resultBox.className='success'; resultBox.innerHTML='✅ <b>Berhasil diedit!</b><br>'+name+' - '+editingNumber+' sudah diupdate!';
+  setTimeout(()=>{ closeEdit(); alert('✅ '+name+' berhasil diedit!'); }, 800);
+}
+
+function accessMemberDirect(num){
+  // Ketua bisa akses & lihat anggota tanpa login ke masing-masing anggota
+  const m=MEMBERS[num]; if(!m) return;
+  const qrUrl=getQrUrl(m.number);
+  const isOwner=m.role==='owner'; const isSekjen=m.role==='sekjen';
+  const cls=isOwner?'owner':(isSekjen?'sekjen':''); const badge=isOwner?'<span class="badge-owner">KETUA</span>':(isSekjen?'<span class="badge-sekjen">SEKJEN</span>':'');
+  
+  // Switch to verify tab and show member data - akses langsung tanpa password
+  switchTab('verify');
+  document.getElementById('memberId').value=m.number;
+  const box=document.getElementById('result');
+  box.className='';
+  box.innerHTML=`<div class="status ${cls}"><span class="dot"></span> AKSES KETUA ${badge} - Ketua bisa akses langsung!</div>
+  <div class="grid"><div class="item"><div class="label">Nama</div><div class="value">${m.name}</div></div><div class="item"><div class="label">Nomor</div><div class="value">${m.number}</div></div><div class="item"><div class="label">Email</div><div class="value">${m.email||'-'}</div></div><div class="item"><div class="label">WA</div><div class="value">${m.wa||'-'}</div></div><div class="item"><div class="label">Password (Ketua bisa lihat)</div><div class="value" style="color:var(--gold2)">${m.password||m.number}</div></div><div class="item"><div class="label">Platform</div><div class="value">${m.platform}</div></div><div class="item"><div class="label">Status</div><div class="value">${m.level} - ${m.status}</div></div><div class="item"><div class="label">Komunitas</div><div class="value">${m.community}</div></div></div>
+  <div class="qr-box ${cls}"><div class="label">QR ANGGOTA - AKSES KETUA TANPA LOGIN</div><img src="${qrUrl}" alt="QR ${m.number}"><p style="color:#aaa;font-size:11px;margin-top:10px"><b>${m.number}</b><br>${m.name}<br><span style="color:var(--gold2);display:none">hidden</span></p><button class="btn" style="margin-top:10px" onclick="downloadQr('${m.number}')">📥 DOWNLOAD QR</button> <button class="btn" style="margin-top:10px;background:linear-gradient(135deg,#6bb8ff,#4a9eff)" onclick="editMember('${m.number}')">✏️ EDIT ANGGOTA INI</button></div>`;
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function accessAsMember(){
+  // Dari modal edit, akses langsung QR tanpa login
+  if(!editingNumber) return;
+  closeEdit();
+  accessMemberDirect(editingNumber);
+}
+
+function deleteMember(num){ const m=MEMBERS[num]; if(!m) return; if(m.role==='owner'){ alert('Tidak bisa hapus KETUA!'); return; } if(m.role==='sekjen' && currentAdmin && currentAdmin.role!=='owner'){ alert('Hanya Ketua bisa hapus Sekjen!'); return; } if(confirm('Hapus '+num+' - '+m.name+'?')){ delete MEMBERS[num]; saveMembers(); renderAll(); } }
 function resetPassword(num){ const m=MEMBERS[num]; if(!m) return; const newPass=prompt('Reset password '+m.name+' ('+num+')\nPassword baru (min 6):', m.password||m.number); if(newPass===null) return; if(newPass.trim().length < 6){ alert('Min 6 karakter!'); return; } MEMBERS[num].password=newPass.trim(); saveMembers(); renderAll(); alert('✅ Password '+m.name+' jadi: '+newPass.trim()); }
 function renderAll(){
   const pl=document.getElementById('pendingList'); const pc=document.getElementById('pendingCount'); pc.innerText=PENDING.length;
   if(PENDING.length===0) pl.innerHTML='<div style="color:#666;font-size:12px">Tidak ada pending</div>'; else { let h=''; for(let i=0;i<PENDING.length;i++){ const m=PENDING[i]; h+=`<div><span><b>${m.number}</b> - ${m.name}<br><small style="color:#aaa">${m.email} | ${m.unit} | ${m.wa}</small></span><span><button onclick="approveMember(${i})" style="background:#0d1b11;color:#8fe0a0;border:1px solid #315a3a;padding:6px 10px;border-radius:8px;font-size:11px">ACC</button> <button onclick="rejectMember(${i})" style="background:#331111;color:#ffaaaa;border:1px solid #553333;padding:6px 8px;border-radius:8px;font-size:11px">X</button></span></div>`; } pl.innerHTML=h; }
-  const list=document.getElementById('adminList'); const mc=document.getElementById('memberCount'); const vals=Object.values(MEMBERS); mc.innerText=vals.length; let html=''; for(let mm of vals){ let badge=''; if(mm.role==='owner') badge=' 👑'; else if(mm.role==='sekjen') badge=' 🏛️'; const qrBtn = `<button onclick="downloadQr('${mm.number}')" style="background:#222;color:var(--gold2);border:1px solid #444;padding:4px 8px;border-radius:6px;font-size:10px;margin-left:6px">QR</button>`; const resetBtn = `<button onclick="resetPassword('${mm.number}')" style="background:#222;color:#8ec2ff;border:1px solid #444;padding:4px 6px;border-radius:6px;font-size:9px;margin-left:4px">Reset</button>`; html+=`<div><span><b>${mm.number}</b> - ${mm.name}${badge}<br><small style="color:#666">${mm.email||'-'} | ${mm.level} | ${mm.wa||'-'} | ${mm.platform} | Pass: ${mm.password||mm.number}</small></span><span>${qrBtn}${resetBtn} <span onclick="deleteMember('${mm.number}')" style="color:#ff6666;cursor:pointer;margin-left:6px">Hapus</span></span></div>`; } list.innerHTML=html;
+  const list=document.getElementById('adminList'); const mc=document.getElementById('memberCount'); const vals=Object.values(MEMBERS); mc.innerText=vals.length; let html=''; for(let mm of vals){ let badge=''; if(mm.role==='owner') badge=' 👑'; else if(mm.role==='sekjen') badge=' 🏛️'; const qrBtn = `<button onclick="downloadQr('${mm.number}')" style="background:#222;color:var(--gold2);border:1px solid #444;padding:4px 8px;border-radius:6px;font-size:10px;margin-left:6px">QR</button>`; const editBtn = `<button onclick="editMember('${mm.number}')" style="background:#1a160e;color:var(--gold2);border:1px solid #453619;padding:4px 8px;border-radius:6px;font-size:10px;margin-left:4px">✏️ Edit</button>`; const aksesBtn = `<button onclick="accessMemberDirect('${mm.number}')" style="background:#0e1524;color:#8ec2ff;border:1px solid #4a9eff44;padding:4px 6px;border-radius:6px;font-size:9px;margin-left:4px">👁️ Akses</button>`; html+=`<div style="flex-direction:column;align-items:flex-start"><div style="width:100%"><b>${mm.number}</b> - ${mm.name}${badge}<br><small style="color:#666">${mm.email||'-'} | ${mm.level} | ${mm.wa||'-'} | ${mm.platform}</small></div><div style="display:flex;gap:4px;margin-top:6px;flex-wrap:wrap">${qrBtn}${editBtn}${aksesBtn}<span onclick="deleteMember('${mm.number}')" style="color:#ff6666;cursor:pointer;margin-left:6px;font-size:11px;border:1px solid #553333;padding:3px 6px;border-radius:6px;background:#331111">Hapus</span></div></div>`; } list.innerHTML=html;
 }
 function exportData(){ const a=document.createElement('a'); a.href="data:text/json;charset=utf-8,"+encodeURIComponent(JSON.stringify({members:MEMBERS,pending:PENDING},null,2)); a.download='anggota-langgeng-family.json'; a.click(); }
 function downloadQr(num){ const url=getQrUrl(num); window.open(url,'_blank'); }
