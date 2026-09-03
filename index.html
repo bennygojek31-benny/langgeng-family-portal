@@ -104,9 +104,9 @@ h1{font-size:26px;margin:12px 0 5px;letter-spacing:2px;text-align:center}.sub{co
     </div>
   </div>
 
-  <div id="loginAdmin" class="hidden"><div class="admin-panel"><h3>LOGIN ADMIN / SEKJEN DPP</h3><input id="adminUser" placeholder="Username (benny / caraka / sekjen)"><input id="adminPass" type="password" placeholder="Password (nomor anggota)"><button onclick="doLogin()">LOGIN</button><p style="color:#777;font-size:11px;margin-top:10px">Owner: benny / LF-0256-0826<br>Sekjen: caraka / LF-DPP-001<br>Email login: carakagana@gmail.com</p></div></div>
+  <div id="loginAdmin" class="hidden"><div class="admin-panel"><h3>LOGIN ADMIN / SEKJEN DPP</h3><input id="adminUser" placeholder="Username"><input id="adminPass" type="password" placeholder="Password"><button onclick="doLogin()">LOGIN</button><p style="color:#555;font-size:10px;margin-top:10px;text-align:center">Login khusus Owner & Sekjen DPP - Hubungi Owner untuk akses</p></div></div>
 
-  <div class="footer">Portal Langgeng Family Mojokerto.<br>Owner: <b style="color:var(--gold2)">Benny Agung LF-0256-0826</b><br>Sekjen Pusat DPP: <b style="color:#8ec2ff">Cundhamani Caraka Gana. SE - LF-DPP-001</b><br>QR Anggota = QR identitas KTA (bukan QRIS pembayaran) • Klik logo 5x login admin</div>
+  <div class="footer">Portal Langgeng Family Mojokerto.<br>Portal Resmi Langgeng Family Mojokerto<br>© DPP Langgeng Family Pusat<br>QR Anggota = QR identitas KTA (bukan QRIS pembayaran) </div>
 </div>
 
 <script>
@@ -174,7 +174,7 @@ function doLogin(){
     var inner=document.getElementById('adminPanelInner'); var title=document.getElementById('adminTitle'); var desc=document.getElementById('adminDesc');
     if(found.role==='sekjen'){ inner.className='admin-panel sekjen'; title.innerHTML='🏛️ PANEL SEKJEN PUSAT DPP - Cundhamani Caraka Gana. SE'; desc.innerHTML='Login sebagai <b style="color:#8ec2ff">SEKJEN PUSAT DPP</b> - Akses keanggotaan'; } else { inner.className='admin-panel'; title.innerHTML='🔐 PANEL OWNER - BENNY AGUNG'; desc.innerHTML='Login sebagai <b style="color:var(--gold2)">OWNER</b> - Akses penuh'; }
     renderAll(); alert('Login berhasil: '+found.label);
-  } else { alert('Login gagal! Owner: benny / LF-0256-0826 Sekjen: caraka / LF-DPP-001'); }
+  } else { alert('Login gagal!  '); }
 }
 function logoutAdmin(){ localStorage.removeItem('lf_admin'); localStorage.removeItem('lf_admin_role'); localStorage.removeItem('lf_admin_user'); currentAdmin=null; document.getElementById('adminPanel').className='hidden'; }
 function saveMembers(){ localStorage.setItem('lf_members', JSON.stringify(MEMBERS)); }
