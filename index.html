@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Portal Verifikasi — Langgeng Family Mojokerto</title>
+<style>
+:root{--bg:#090909;--card:#121212;--gold:#d8a83e;--gold2:#f3d27a;--text:#f4f4f4;--muted:#aaa;--line:#332711}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#241b0c 0,#090909 42%);color:var(--text);font-family:Arial,Helvetica,sans-serif;min-height:100vh}
+.wrap{max-width:720px;margin:auto;padding:28px 18px 50px}.brand{text-align:center;margin:8px 0 28px}
+.logo{width:74px;height:74px;border:2px solid var(--gold);border-radius:20px;display:grid;place-items:center;margin:auto;color:var(--gold2);font-weight:900;font-size:26px;box-shadow:0 0 25px #d8a83e22}
+h1{font-size:25px;margin:15px 0 5px;letter-spacing:2px}.sub{color:var(--muted);font-size:13px;letter-spacing:2px}
+.card{background:linear-gradient(145deg,#171717,#0e0e0e);border:1px solid var(--line);border-radius:20px;padding:25px;box-shadow:0 20px 60px #0008}
+.search{display:flex;gap:10px;margin-bottom:20px}.search input{flex:1;background:#090909;border:1px solid #453619;color:#fff;border-radius:12px;padding:14px;font-size:15px}.search button{border:0;border-radius:12px;padding:0 20px;background:linear-gradient(135deg,var(--gold2),var(--gold));font-weight:800;cursor:pointer}
+.status{display:flex;align-items:center;gap:10px;border:1px solid #315a3a;background:#0d1b11;padding:12px 14px;border-radius:12px;color:#8fe0a0;font-weight:700;margin-bottom:20px}.dot{width:10px;height:10px;background:#50c878;border-radius:50%}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.item{border-bottom:1px solid #272727;padding:11px 0}.label{color:var(--muted);font-size:11px;letter-spacing:1.4px;text-transform:uppercase}.value{font-size:16px;font-weight:700;margin-top:5px}
+.quote{margin-top:22px;padding:15px;border-left:3px solid var(--gold);background:#17130b;color:#ddd;font-size:14px;line-height:1.6}
+.footer{text-align:center;color:#777;font-size:11px;margin-top:22px;line-height:1.6}
+.hidden{display:none}.error{color:#ff9d9d;background:#241010;border:1px solid #552222;padding:13px;border-radius:12px}
+@media(max-width:520px){.grid{grid-template-columns:1fr}.search button{padding:0 15px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">
+    <div class="logo">LF</div>
+    <h1>LANGGENG FAMILY</h1>
+    <div class="sub">MOJOKERTO • PORTAL VERIFIKASI ANGGOTA</div>
+  </div>
+  <div class="card">
+    <form class="search" onsubmit="verify(event)">
+      <input id="memberId" placeholder="Masukkan nomor anggota, contoh LF-0256-0826" autocomplete="off">
+      <button type="submit">VERIFIKASI</button>
+    </form>
+    <div id="result" class="hidden"></div>
+  </div>
+  <div class="footer">Portal identitas anggota Langgeng Family Mojokerto.<br>Gunakan informasi ini untuk keperluan verifikasi keanggotaan.</div>
+</div>
+<script>
+const MEMBERS = {
+  "LF-0256-0826": {
+    name:"Benny Agung",
+    number:"LF-0256-0826",
+    status:"AKTIF",
+    level:"PREMIUM MEMBER",
+    community:"Langgeng Family Mojokerto",
+    platform:"Maxim • inDrive • Shopee • Grab • Gojek",
+    valid:"Sesuai data komunitas"
+  }
+};
+function verify(e){
+  if(e) e.preventDefault();
+  const id=document.getElementById("memberId").value.trim().toUpperCase();
+  const box=document.getElementById("result");
+  const m=MEMBERS[id];
+  if(!m){
+    box.className="";
+    box.innerHTML='<div class="error">Data anggota tidak ditemukan. Periksa kembali nomor KTA.</div>';
+    return;
+  }
+  box.className="";
+  box.innerHTML=`
+    <div class="status"><span class="dot"></span> ${m.status} — DATA TERVERIFIKASI</div>
+    <div class="grid">
+      <div class="item"><div class="label">Nama Anggota</div><div class="value">${m.name}</div></div>
+      <div class="item"><div class="label">Nomor Anggota</div><div class="value">${m.number}</div></div>
+      <div class="item"><div class="label">Status</div><div class="value">${m.level}</div></div>
+      <div class="item"><div class="label">Komunitas</div><div class="value">${m.community}</div></div>
+      <div class="item"><div class="label">Platform</div><div class="value">${m.platform}</div></div>
+      <div class="item"><div class="label">Masa Berlaku</div><div class="value">${m.valid}</div></div>
+    </div>
+    <div class="quote">KTA ini merupakan identitas anggota Langgeng Family Mojokerto. Verifikasi dilakukan melalui nomor anggota yang tercantum pada KTA.</div>`;
+}
+const params=new URLSearchParams(location.search);
+if(params.get("id")){document.getElementById("memberId").value=params.get("id");verify();}
+</script>
+</body>
+</html>
