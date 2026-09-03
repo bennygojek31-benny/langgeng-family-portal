@@ -129,7 +129,7 @@ h1{font-size:28px;margin:12px 0 5px;letter-spacing:2px;text-align:center;color:v
         <option value="PREMIUM MEMBER">PREMIUM MEMBER</option>
         <option value="PENGURUS">PENGURUS</option>
         <option value="SEKJEN PUSAT DPP">SEKJEN PUSAT DPP</option>
-        <option value="PEMILIK / OWNER">PEMILIK / OWNER</option>
+        <option value="KETUA LANGGENG FAMILY MOJOKERTO">KETUA LANGGENG FAMILY MOJOKERTO</option>
       </select>
       <select id="newPlatform"><option value="Maxim">Maxim</option><option value="inDrive">inDrive</option><option value="Gojek">Gojek</option><option value="Grab">Grab</option><option value="Lalamove">Lalamove</option><option value="Shopee Food">Shopee Food</option></select>
       <button onclick="addMember()">+ TAMBAH & BUAT QR</button>
@@ -153,13 +153,10 @@ h1{font-size:28px;margin:12px 0 5px;letter-spacing:2px;text-align:center;color:v
     </div>
   </div>
 
-  <div class="footer">
+    <div class="footer">
     Portal Resmi Langgeng Family Mojokerto © 2026<br>
-    Owner: <b style="color:var(--gold2)">Benny Lefianto Sandi Agung</b> - LF-0256-0826 - WA 081333556398<br>
-    Sekjen Pusat DPP: <b style="color:#8ec2ff">Cundhamani Caraka Gana. SE</b> - LF-DPP-001 - carakagana@gmail.com<br>
-    Platform: Maxim, inDrive, Gojek, Grab, Lalamove, Shopee Food (Pisah, gak digabung)<br>
-    🔑 Gak perlu lapor owner - Semua anggota bisa ubah password mandiri!<br>
-    2 Akses: (1) Saat sudah login di dashboard, (2) Lupa password di portal - reset mandiri
+    Ketua Langgeng Family Mojokerto: <b style="color:var(--gold2)">Benny Lefianto Sandi Agung</b> - WA 081333556398<br>
+    Sekjen: <b style="color:#8ec2ff">Cundhamani Caraka Gana. SE</b> - WA 081249060309
   </div>
 </div>
 
@@ -171,7 +168,7 @@ const DEFAULT_MEMBERS = {
     email:"benny.lf@gmail.com",
     password:"LF-0256-0826",
     status:"AKTIF",
-    level:"PEMILIK / OWNER",
+    level:"KETUA LANGGENG FAMILY MOJOKERTO",
     role:"owner",
     community:"Langgeng Family Mojokerto",
     platform:"Maxim",
@@ -336,7 +333,7 @@ function doLogin(){
       desc.innerHTML='Login sebagai <b style="color:#8ec2ff">SEKJEN PUSAT DPP</b><br>Email: carakagana@gmail.com | WA: 081249060309';
     } else {
       inner.className='admin-panel';
-      title.innerHTML='🔐 PANEL OWNER - Benny Lefianto Sandi Agung';
+      title.innerHTML='🔐 PANEL KETUA - Benny Lefianto Sandi Agung';
       desc.innerHTML='Login sebagai <b style="color:var(--gold2)">OWNER</b><br>LF-0256-0826 | WA: 081333556398';
     }
     renderAll();
@@ -411,8 +408,8 @@ if(localStorage.getItem('lf_admin')){
     desc.innerHTML='Sekjen: carakagana@gmail.com | WA: 081249060309'; 
   } else {
     inner.className='admin-panel';
-    title.innerHTML='🔐 PANEL OWNER - Benny Lefianto Sandi Agung';
-    desc.innerHTML='Owner: LF-0256-0826 | WA: 081333556398';
+    title.innerHTML='🔐 PANEL KETUA - Benny Lefianto Sandi Agung';
+    desc.innerHTML='Ketua: WA 081333556398';
   }
   setTimeout(renderAll,100); 
 }
