@@ -332,6 +332,72 @@ window.renderAll = function(){
 
 };
 
+
+window.loginAnggotaDanLihatSemua = function(){
+  const input = document.getElementById('verifyInput').value.trim();
+  if(!input){ alert('Masukkan Nomor LF- atau Email!'); return; }
+  
+  // Cari anggota
+  let member = null;
+  let keyFound = null;
+  for(let k in MEMBERS){
+    if(k.toLowerCase()===input.toLowerCase() || MEMBERS[k].email.toLowerCase()===input.toLowerCase()){
+      member = MEMBERS[k]; keyFound=k; break;
+    }
+  }
+  if(!member){
+    // cek pending
+    for(let p of PENDING){
+      if(p.number.toLowerCase()===input.toLowerCase() || p.email.toLowerCase()===input.toLowerCase()){
+        alert('⏳ Akun Anda masih MENUNGGU ACC Ketua!\nNomor: '+p.number+'\nHubungi Ketua WA 081333556398');
+        return;
+      }
+    }
+    alert('❌ Nomor/Email tidak ditemukan! Daftar baru dulu.');
+    return;
+  }
+  
+  if(member.status!=='AKTIF'){
+    alert('⏳ Status: '+member.status+' - Hubungi Ketua!');
+    return;
+  }
+  
+  // SUKSES LOGIN - Simpan session
+  localStorage.setItem('lf_logged_member', keyFound);
+  
+  // Tampilkan kartu anggota login + semua member
+  alert('✅ LOGIN BERHASIL! Selamat datang '+member.name+'\nMasuk ke Data Anggota...');
+  
+  // Pindah ke tab ANGGOTA
+  switchTab('anggota');
+  renderAll();
+  
+  // Scroll ke kartu sendiri dan highlight
+  setTimeout(()=>{
+    const card = document.getElementById('card-'+keyFound);
+    if(card){
+      card.style.border='3px solid #d4a44a';
+      card.scrollIntoView({behavior:'smooth'});
+      card.style.animation='blink 1s 3';
+    }
+    // Tampilkan info login di atas
+    const info = document.getElementById('loginInfo');
+    if(info){
+      info.innerHTML = `✅ Login sebagai: <b>${member.name}</b> (${member.number}) | <a href="#" onclick="logoutAnggota()" style="color:#ff8a8a">Logout</a>`;
+      info.classList.remove('hidden');
+    }
+  },500);
+};
+
+window.logoutAnggota = function(){
+  localStorage.removeItem('lf_logged_member');
+  const info=document.getElementById('loginInfo');
+  if(info) info.classList.add('hidden');
+  alert('Logout berhasil!');
+  switchTab('verifikasi');
+};
+
+
 window.doOwnerLogin = function(){
   try{
     // Buka tab ketua
@@ -435,7 +501,8 @@ window.logoutOwner = function(){
       </form>
       <hr style="border-color:#333;margin:15px 0">
       <b>SEMUA ANGGOTA (<span id="allCount">0</span>)</b>
-      <div id="allMembers"></div>
+      <div id="loginInfo" class="hidden" style="background:#1a2a1a;border:1px solid #2a5a2a;color:#7cff9a;padding:12px;border-radius:12px;margin-bottom:12px;text-align:center"></div>
+<div id="allMembers"></div>
       <button class="btn2 btn" style="margin-top:10px" onclick="logoutOwner()">Logout</button>
     </div>
   </div>
