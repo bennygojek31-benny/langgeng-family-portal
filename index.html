@@ -195,7 +195,7 @@ const ADMIN_USERS = [
 ];
 let currentAdmin = null;
 
-function switchTab_original(t){
+function switchTab(t){
   document.getElementById('panelVerify').className = t==='verify'?'card':'card hidden';
   document.getElementById('panelLogin').className = t==='login'?'card':'card hidden';
   document.getElementById('panelDaftar').className = t==='daftar'?'card':'card hidden';
@@ -335,64 +335,39 @@ if(params.get("daftar")==="1"||params.get("join")==="1"||params.get("tab")==="da
 </script>
 
 <script>
-// FIX: Pastikan halaman depan selalu Verifikasi, bukan Edit
+// === FIX SISTEM DAFTAR - NAMA WAJIB ASLI ===
 document.addEventListener('DOMContentLoaded', ()=>{
-  // Tutup semua box edit yang mungkin kebuka
-  const editBox = document.getElementById('editBox');
-  if(editBox) editBox.className='hidden';
-  const importBox = document.getElementById('importBox');
-  if(importBox) importBox.className='hidden';
-  
-  // Kalau tidak ada param admin/edit/id/daftar, paksa tab verifikasi
-  const p = new URLSearchParams(location.search);
-  if(!p.get('id') && !p.get('admin') && !p.get('edit') && !p.get('daftar') && !p.get('join') && !p.get('tab')){
-    switchTab('verifikasi');
-    // Scroll ke atas
-    window.scrollTo(0,0);
-  }
-  
-  // Hapus param edit dari URL biar tidak stuck di edit
-  if(p.get('edit') && !confirm('Tetap di mode edit anggota?')){
-    history.replaceState(null,'', location.pathname);
-    switchTab('verifikasi');
+  const daftarForm = document.getElementById('daftarForm');
+  if(daftarForm){
+    daftarForm.addEventListener('submit', function(e){
+      const nameInput = document.getElementById('daftarName') || document.querySelector('[name="name"]') || document.getElementById('nama');
+      if(nameInput){
+        const val = nameInput.value.trim();
+        if(!val || val.toLowerCase()==='anggota baru' || val.length<3){
+          e.preventDefault();
+          alert('❌ Nama Lengkap WAJIB diisi dengan nama asli! Minimal 3 huruf, bukan "Anggota Baru"');
+          nameInput.focus();
+          nameInput.style.border='2px solid #ff4444';
+          return false;
+        }
+      }
+      const emailInput = document.getElementById('daftarEmail');
+      if(emailInput && !emailInput.value.includes('@')){
+        e.preventDefault();
+        alert('❌ Email wajib pakai @ - Gunakan email driver asli!');
+        return false;
+      }
+    });
   }
 });
 
-function logoutAdmin(){
-  localStorage.removeItem('lf_admin');
-  localStorage.removeItem('lf_admin_role');
-  localStorage.removeItem('lf_admin_user');
-  location.href = location.pathname;
-}
-
-// Override accessMemberDirect biar tidak auto redirect aneh
-const _oldAccess = window.accessMemberDirect;
-if(_oldAccess){
-  window.accessMemberDirect = function(num){
-    // Tutup edit dulu
-    const eb = document.getElementById('editBox');
-    if(eb) eb.className='hidden';
-    _oldAccess(num);
-  }
+// Patch fungsi yang bikin Anggota Baru - cegah
+const originalAddPending = window.addPending || window.submitDaftar;
+if(window.PENDING){
+  // Filter out any pending with Anggota Baru name
+  window.PENDING = window.PENDING.filter(p=> p.name && p.name.toLowerCase()!=='anggota baru');
 }
 </script>
 
 <script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script></body>
 </html>
-
-<script>
-function switchTab(t){
-  // Hide editBox every tab switch
-  const eb = document.getElementById('editBox');
-  if(eb) eb.classList.add('hidden');
-  // Call original if exists
-  if(window.switchTab_original) return window.switchTab_original(t);
-  // Fallback logic
-  document.querySelectorAll('.tab').forEach(el=>el.classList.remove('active'));
-  document.querySelectorAll('.tab-content').forEach(el=>el.classList.add('hidden'));
-  const tabBtn = document.getElementById('tab-'+t);
-  const tabContent = document.getElementById('content-'+t);
-  if(tabBtn) tabBtn.classList.add('active');
-  if(tabContent) tabContent.classList.remove('hidden');
-}
-</script>
