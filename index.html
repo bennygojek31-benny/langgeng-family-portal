@@ -149,6 +149,10 @@ const DEFAULT_MEMBERS = {
 };
 let MEMBERS = JSON.parse(localStorage.getItem('lf_members') || 'null') || JSON.parse(JSON.stringify(DEFAULT_MEMBERS));
 let PENDING = JSON.parse(localStorage.getItem('lf_pending') || '[]');
+// FIX: Pastikan 3 anggota aktif selalu ada (jika cache lama cuma 2, paksa jadi 3)
+for(let k in DEFAULT_MEMBERS){ if(!MEMBERS[k]) MEMBERS[k]=DEFAULT_MEMBERS[k]; }
+if(Object.keys(MEMBERS).length<3){ MEMBERS = JSON.parse(JSON.stringify(DEFAULT_MEMBERS)); }
+localStorage.setItem('lf_members', JSON.stringify(MEMBERS));
 function saveData(){ localStorage.setItem('lf_members', JSON.stringify(MEMBERS)); localStorage.setItem('lf_pending', JSON.stringify(PENDING)); updateCount(); }
 function updateCount(){ document.getElementById('memberCount').innerText = Object.keys(MEMBERS).length; const pc=document.getElementById('pendingCount'); if(pc) pc.innerText=PENDING.length; }
 function generateNumber(){ const d=new Date(); return `LF-${String(d.getDate()).padStart(2,'0')}${String(d.getMonth()+1).padStart(2,'0')}-${String(Math.floor(Math.random()*9000)+1000)}`; }
@@ -253,7 +257,7 @@ function renderPending(){
 }
 window.accMember = function(i){ const p=PENDING[i]; MEMBERS[p.number]={name:p.name, number:p.number, email:p.email, wa:p.wa, password:p.password, platform:p.platform, level:"MEMBER", status:"AKTIF"}; PENDING.splice(i,1); saveData(); alert('✅ '+p.name+' di-ACC! KTA: '+p.number); renderPending(); }
 window.tolakMember = function(i){ if(!confirm('Tolak '+PENDING[i].name+'?')) return; PENDING.splice(i,1); saveData(); renderPending(); }
-updateCount(); renderPending();
+updateCount(); renderPending(); setTimeout(()=>{ if(Object.keys(MEMBERS).length!==3){ MEMBERS=JSON.parse(JSON.stringify(DEFAULT_MEMBERS)); saveData(); location.reload(); } },500);
 const loggedMember=localStorage.getItem('lf_logged_member');
 if(loggedMember && MEMBERS[loggedMember]){ document.getElementById('daftarCard').classList.add('hidden'); document.getElementById('loginCard').classList.add('hidden'); document.getElementById('ktaPage').classList.remove('hidden'); document.getElementById('loginInfo').innerHTML=`✅ Login: <b>${MEMBERS[loggedMember].name}</b> (${MEMBERS[loggedMember].number})`; renderAllKTA(loggedMember); }
 </script>
