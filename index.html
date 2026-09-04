@@ -127,6 +127,12 @@ body{background:#000;color:#fff;font-family:-apple-system,BlinkMacSystemFont,Seg
           <div style="color:#d4a44a;font-weight:700">Panel Ketua - <span id="pendingCount">0</span> pending</div>
           <button class="btn btn-dark" onclick="logoutOwner()" style="width:auto;padding:6px 12px;font-size:11px">Logout</button>
         </div>
+        <div style="background:#1a1a0a;border:1px solid #ff6b6b;border-radius:10px;padding:12px;margin-bottom:12px">
+          <div style="color:#ff6b6b;font-weight:700;font-size:12px;margin-bottom:8px">🔧 FIX LOGIN SEKJEN</div>
+          <div style="font-size:11px;color:#888;margin-bottom:8px">Jika Sekjen tidak bisa login, klik reset dibawah:</div>
+          <button class="btn btn-gold" onclick="resetSekjen()" style="padding:10px;font-size:12px">🔑 RESET PASSWORD SEKJEN KE sekjen123</button>
+          <div id="resetResult" style="margin-top:8px;font-size:11px"></div>
+        </div>
         <div id="pendingList"></div>
         <div id="allMembersAdmin" style="margin-top:15px"></div>
       </div>
@@ -199,8 +205,11 @@ window.loginAnggota = function(){
     alert('❌ Tidak ditemukan! Daftar baru dulu.'); return;
   }
   // CEK PASSWORD - Anggota buat sendiri
-  const realPass = found.password || '';
-  if(realPass && passInput!==realPass){ alert('❌ Password salah!\nPassword yang kamu buat sendiri waktu daftar.\nHubungi Ketua WA 081333556398 jika lupa.'); return; }
+  const realPass = (found.password || '').trim();
+  if(realPass && passInput.trim()!==realPass){ 
+    alert('❌ Password salah!\nCoba password: '+realPass.charAt(0)+'*** (hubungi Ketua WA 081333556398 untuk reset)'); 
+    return; 
+  }
   if(!realPass){ alert('Akun lama belum ada password, hubungi Ketua untuk reset password!'); return; }
   localStorage.setItem('lf_logged_member', keyFound);
   document.getElementById('daftarCard').classList.add('hidden');
@@ -282,9 +291,49 @@ function renderPending(){
   const div=document.getElementById('pendingList'); const allDiv=document.getElementById('allMembersAdmin'); if(!div) return;
   if(PENDING.length===0){ div.innerHTML='<div style="color:#666;font-size:12px;text-align:center;padding:10px">Tidak ada pendaftar pending</div>'; }
   else { let html=''; PENDING.forEach((p,i)=>{ html+=`<div class="kta-card" style="border-color:#ff6b6b"><div style="color:#ff6b6b;font-size:11px">${p.number} • PENDING</div><div style="font-weight:700;margin:5px 0">${p.name}</div><div style="font-size:11px;color:#888">${p.platform} • ${p.email} • WA ${p.wa}</div><div style="display:flex;gap:8px;margin-top:10px"><button class="btn btn-gold" onclick="accMember(${i})" style="flex:1;padding:8px;font-size:11px">✅ ACC</button><button class="btn btn-dark" onclick="tolakMember(${i})" style="flex:1;padding:8px;font-size:11px">❌ Tolak</button></div></div>`; }); div.innerHTML=html; }
-  let html2='<div style="color:#888;font-size:11px;margin:10px 0">SEMUA ANGGOTA ('+Object.keys(MEMBERS).length+')</div>';
-  for(let k in MEMBERS){ const m=MEMBERS[k]; html2+=`<div style="background:#111;border:1px solid #222;padding:8px;border-radius:8px;margin:5px 0;font-size:11px;display:flex;justify-content:space-between"><span>${m.name} (${m.number})</span><span style="color:#4ade80">${m.status}</span></div>`; }
+  let html2='<div style="color:#888;font-size:11px;margin:10px 0">SEMUA ANGGOTA ('+Object.keys(MEMBERS).length+') - KLIK RESET JIKA LUPA PASSWORD</div>';
+  for(let k in MEMBERS){ const m=MEMBERS[k]; html2+=`<div style="background:#111;border:1px solid #222;padding:10px;border-radius:8px;margin:8px 0;font-size:11px">
+    <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:700">${m.name}</span><span style="color:#4ade80">${m.status}</span></div>
+    <div style="color:#888;margin:4px 0">${m.number} • ${m.level} • ${m.platform}</div>
+    <div style="color:#d4a44a;margin:4px 0">Email: ${m.email} | Pass: <b>${m.password || '(kosong)'}</b></div>
+    <div style="display:flex;gap:6px;margin-top:6px">
+      <button onclick="resetPassMember('${k}')" style="background:#222;border:1px solid #333;color:#fff;padding:5px 8px;border-radius:6px;font-size:10px;cursor:pointer">Reset ke 123456</button>
+      <button onclick="resetPassMemberDefault('${k}')" style="background:#d4a44a;border:none;color:#000;padding:5px 8px;border-radius:6px;font-size:10px;cursor:pointer;font-weight:700">Reset Default</button>
+    </div>
+  </div>`; }
   if(allDiv) allDiv.innerHTML=html2; updateCount();
+}
+window.resetSekjen = function(){
+  const key = 'LF-DPP-001';
+  if(MEMBERS[key]){
+    MEMBERS[key].password = 'sekjen123';
+    saveData();
+    document.getElementById('resetResult').innerHTML = '✅ Password Sekjen direset jadi: <b>sekjen123</b><br>Login: LF-DPP-001 / sekjen123';
+    alert('✅ Password SEKJEN berhasil direset jadi: sekjen123\n\nID Login: LF-DPP-001\nPassword: sekjen123');
+    renderPending();
+  } else {
+    // If Sekjen missing, restore
+    MEMBERS[key] = JSON.parse(JSON.stringify(DEFAULT_MEMBERS[key]));
+    saveData();
+    alert('✅ Sekjen dipulihkan! Password: sekjen123');
+    renderPending();
+  }
+}
+window.resetPassMember = function(key){
+  if(!MEMBERS[key]) return;
+  if(!confirm('Reset password '+MEMBERS[key].name+' jadi 123456?')) return;
+  MEMBERS[key].password = '123456';
+  saveData(); renderPending();
+  alert('✅ Password '+MEMBERS[key].name+' jadi: 123456');
+}
+window.resetPassMemberDefault = function(key){
+  if(!MEMBERS[key]) return;
+  const defaults = {'LF-0256-0826':'benny123','LF-DPP-001':'sekjen123','LF-5850-0926':'firdaus123'};
+  const def = defaults[key] || '123456';
+  if(!confirm('Reset password '+MEMBERS[key].name+' ke default: '+def+'?')) return;
+  MEMBERS[key].password = def;
+  saveData(); renderPending();
+  alert('✅ Password '+MEMBERS[key].name+' direset ke: '+def);
 }
 window.accMember = function(i){ const p=PENDING[i]; MEMBERS[p.number]={name:p.name, number:p.number, email:p.email, wa:p.wa, password:p.password, platform:p.platform, level:"MEMBER", status:"AKTIF"}; PENDING.splice(i,1); saveData(); alert('✅ '+p.name+' di-ACC! KTA: '+p.number); renderPending(); }
 window.tolakMember = function(i){ if(!confirm('Tolak '+PENDING[i].name+'?')) return; PENDING.splice(i,1); saveData(); renderPending(); }
