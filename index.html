@@ -43,38 +43,10 @@ h1{font-size:28px;margin:12px 0 5px;letter-spacing:2px;text-align:center;color:v
 .qr-box{text-align:center;padding:22px;border:1px solid var(--line);background:linear-gradient(145deg,#1a1a1a,#121212);border-radius:16px;margin-top:20px}.qr-box img{max-width:220px;width:100%;background:#fff;padding:12px;border-radius:12px}.qr-box.sekjen{border-color:var(--blue);background:linear-gradient(145deg,#0e1524,#121c33)}.qr-box.owner{border-color:var(--gold);background:linear-gradient(145deg,#1a160e,#17130b)}
 .footer{text-align:center;color:#777;font-size:11px;margin-top:24px;line-height:1.7}
 .hidden{display:none}.error{color:#ff9d9d;background:#241010;border:1px solid #552222;padding:13px;border-radius:12px;font-size:13px}.success{background:#0d1b11;border:1px solid #315a3a;color:#8fe0a0;padding:13px;border-radius:12px;margin-bottom:14px;font-size:13px}
-.form-group{margin-bottom:12px}.form-group label{display:block;color:var(--muted);font-size:11px;letter-spacing:1px;margin-bottom:6px;text-transform:uppercase}.form-group input,.form-group select{width:100%;background:#090909;border:1px solid #453619;color:#fff;border-radius:10px;padding:12px;font-size:14px;-webkit-appearance:none;appearance:none}
-.admin-panel{border:1px dashed var(--gold);background:#1a160e;border-radius:16px;padding:18px;margin-top:20px}.admin-panel.sekjen{border-color:var(--blue);background:#0e1524}.admin-panel h3{margin:0 0 12px;color:var(--gold2);font-size:14px;letter-spacing:1.5px}.admin-panel.sekjen h3{color:#8ec2ff}.admin-panel input,.admin-panel select{width:100%;background:#090909;border:1px solid #453619;color:#fff;border-radius:10px;padding:12px;margin-bottom:10px;font-size:14px;-webkit-appearance:none;appearance:none}.admin-panel button{width:100%;border:0;border-radius:10px;padding:12px;background:linear-gradient(135deg,var(--gold2),var(--gold));font-weight:800;cursor:pointer;margin-top:6px}.admin-list{margin-top:14px;max-height:320px;overflow:auto}.admin-list div{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #222;font-size:13px;gap:8px}.admin-actions{display:flex;gap:8px;margin-top:12px}.admin-actions button{flex:1}
+.form-group{margin-bottom:12px}.form-group label{display:block;color:var(--muted);font-size:11px;letter-spacing:1px;margin-bottom:6px;text-transform:uppercase}.form-group input,.form-group select{width:100%;background:#090909;border:1px solid #453619;color:#fff;border-radius:10px;padding:12px;font-size:14px}
+.admin-panel{border:1px dashed var(--gold);background:#1a160e;border-radius:16px;padding:18px;margin-top:20px}.admin-panel.sekjen{border-color:var(--blue);background:#0e1524}.admin-panel h3{margin:0 0 12px;color:var(--gold2);font-size:14px;letter-spacing:1.5px}.admin-panel.sekjen h3{color:#8ec2ff}.admin-panel input,.admin-panel select{width:100%;background:#090909;border:1px solid #453619;color:#fff;border-radius:10px;padding:12px;margin-bottom:10px;font-size:14px}.admin-panel button{width:100%;border:0;border-radius:10px;padding:12px;background:linear-gradient(135deg,var(--gold2),var(--gold));font-weight:800;cursor:pointer;margin-top:6px}.admin-list{margin-top:14px;max-height:320px;overflow:auto}.admin-list div{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #222;font-size:13px;gap:8px}.admin-actions{display:flex;gap:8px;margin-top:12px}.admin-actions button{flex:1}
 @media(max-width:520px){.grid{grid-template-columns:1fr}.logo{width:150px}}
 </style>
-
-<!-- FIREBASE SDK - SINCRON CLOUD -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getDatabase, ref, set, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyCF1WrJmO6ShZYq7O11tEo-8V2e4OHLNI",
-    authDomain: "langgeng-family-mojokerto-e6c8d.firebaseapp.com",
-    databaseURL: "https://langgeng-family-mojokerto-e6c8d-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "langgeng-family-mojokerto-e6c8d",
-    storageBucket: "langgeng-family-mojokerto-e6c8d.firebasestorage.app",
-    messagingSenderId: "561567455964",
-    appId: "1:561567455964:web:e3e5bc9d071b9b8378c84f",
-    measurementId: "G-MD3WHH8QT2"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-  window.db = db;
-  window.dbRef = ref;
-  window.dbSet = set;
-  window.dbUpdate = update;
-  window.dbOnValue = onValue;
-  
-  console.log("🔥 Firebase connected:", firebaseConfig.databaseURL);
-</script>
-
 </head>
 <body>
 <div class="wrap">
@@ -84,75 +56,48 @@ h1{font-size:28px;margin:12px 0 5px;letter-spacing:2px;text-align:center;color:v
     <div class="sub">MOJOKERTO • PORTAL VERIFIKASI KTA RESMI</div>
   </div>
 
-  
-  <div id="syncInfo" style="background:linear-gradient(90deg,#331111,#241010);border:1px solid #553333;border-radius:12px;padding:10px 14px;margin-bottom:16px;font-size:11px;color:#ffaaaa;text-align:left">
-    <b>⚠️ INFO SINKRON:</b> Portal versi sekarang simpan di HP masing-masing (localStorage). Jadi kalau daftar di HP A, pending hanya muncul di HP A, tidak otomatis muncul di HP Ketua B. Ini kenapa LF-5850-0926 gak sinkron.<br>
-    <b>Solusi cepat:</b> Ketua tambahkan manual nomor <b>LF-5850-0926</b> dengan Email oqifirpro@gmail.com - Pass Mojokerto71 di bawah, lalu ACC.<br>
-    <b>Solusi permanen:</b> Pakai versi Firebase (sinkron semua HP otomatis) - hubungi developer untuk upgrade ke Firebase.
-    <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">
-      <button onclick="exportPendingForKetua()" style="background:#331111;color:#ffaaaa;border:1px solid #553333;padding:6px 10px;border-radius:8px;font-size:10px">📤 EXPORT PENDING (KIRIM KE KETUA)</button>
-      <button onclick="document.getElementById('importBox').className=''" style="background:#0d1b11;color:#8fe0a0;border:1px solid #315a3a;padding:6px 10px;border-radius:8px;font-size:10px">📥 IMPORT DARI ANGGOTA</button>
-    </div>
-    <div id="importBox" class="hidden" style="margin-top:10px">
-      <textarea id="importText" placeholder="Paste JSON pending dari anggota di sini" style="width:100%;height:80px;background:#090909;border:1px solid #453619;color:#fff;border-radius:8px;padding:8px;font-size:11px"></textarea>
-      <button onclick="importPending()" style="margin-top:6px;background:#d8a83e;color:#000;border:0;padding:8px 12px;border-radius:8px;font-weight:700;font-size:11px;width:100%">IMPORT & SINKRON</button>
-    </div>
-  </div>
-
   <div class="tabs">
     <div id="tabVerify" class="tab active" onclick="switchTab('verify')">🔍 VERIFIKASI</div>
     <div id="tabLogin" class="tab" onclick="switchTab('login')">🔐 LOGIN ANGGOTA</div>
     <div id="tabDaftar" class="tab" onclick="switchTab('daftar')">📝 DAFTAR BARU</div>
   </div>
 
+  <!-- VERIFIKASI -->
   <div id="panelVerify" class="card">
     <form class="search" onsubmit="return verify(event)">
       <input id="memberId" placeholder="Masukkan nomor anggota, contoh LF-0256-0826" autocomplete="off">
       <button type="submit">VERIFIKASI</button>
     </form>
     <div id="result" class="hidden"></div>
-    <div style="margin-top:14px;color:#666;font-size:11px;text-align:center">QR Anggota = QR identitas KTA (bukan QRIS pembayaran)</div>
+    <div style="margin-top:14px;color:#666;font-size:11px;text-align:center">QR Anggota = QR identitas KTA (bukan QRIS pembayaran) • Scan untuk cek keaslian KTA</div>
   </div>
 
+  <!-- LOGIN ANGGOTA -->
   <div id="panelLogin" class="card hidden">
-    <h3 style="margin:0 0 6px;color:var(--gold2)">Login Anggota - Akses Mandiri</h3>
-    <p style="color:#50c878;font-size:11px;margin:0 0 14px">✅ Gak perlu lapor owner - Bisa login & ubah password mandiri!</p>
+    <h3 style="margin:0 0 6px;color:var(--gold2)">Login Anggota - Wajib Email Driver</h3>
+    <p style="color:#777;font-size:11px;margin:0 0 14px">Gunakan email yang terdaftar di Maxim / inDrive / Gojek / Grab</p>
     <div id="loginResult" class="hidden"></div>
     <div class="form-group"><label>Email Driver *</label><input id="lEmail" type="email" placeholder="email di aplikasi driver"></div>
     <div class="form-group"><label>Nomor Anggota *</label><input id="lNumber" placeholder="LF-0256-0826"></div>
-    <div class="form-group"><label>Password *</label><input id="lPass" type="password" placeholder="Default = Nomor Anggota"></div>
     <button class="btn" style="width:100%" onclick="loginMember()">LOGIN & LIHAT QR KTA</button>
-    <div style="text-align:center;margin-top:10px"><a onclick="showForgot()" style="color:#4a9eff;font-size:11px;cursor:pointer;text-decoration:underline">🔑 Lupa Password? Reset Mandiri di Portal - Gak Perlu Lapor!</a></div>
-    
-    <div id="forgotBox" class="hidden" style="margin-top:16px;border:1px dashed #4a9eff;background:#0e1524;border-radius:16px;padding:16px">
-      <h4 style="color:#8ec2ff;margin:0 0 10px;font-size:13px">🔑 RESET PASSWORD MANDIRI DI PORTAL</h4>
-      <p style="color:#aaa;font-size:11px;margin:0 0 12px">Lupa password? Reset sendiri di portal ini tanpa lapor owner. Verifikasi Email + Nomor + WA.</p>
-      <div id="forgotResult" class="hidden" style="margin-bottom:10px"></div>
-      <div class="form-group"><label>Email Terdaftar *</label><input id="fEmail" type="email" placeholder="email terdaftar"></div>
-      <div class="form-group"><label>Nomor Anggota *</label><input id="fNumber" placeholder="LF-..."></div>
-      <div class="form-group"><label>No WA Terdaftar *</label><input id="fWa" placeholder="WA terdaftar"></div>
-      <div class="form-group"><label>Password Baru *</label><input id="fNewPass" type="password" placeholder="Minimal 6 karakter"></div>
-      <button class="btn" style="width:100%;background:linear-gradient(135deg,#6bb8ff,#4a9eff)" onclick="forgotPassword()">🔄 RESET PASSWORD MANDIRI - DI PORTAL</button>
-      <div style="text-align:center;margin-top:8px"><a onclick="hideForgot()" style="color:#666;font-size:10px;cursor:pointer">Tutup</a></div>
-    </div>
-    
     <div id="memberDashboard" class="hidden" style="margin-top:16px"></div>
   </div>
 
+  <!-- DAFTAR -->
   <div id="panelDaftar" class="card hidden">
-    <h3 style="margin:0 0 6px;color:var(--gold2)">Daftar Anggota Baru - Mandiri</h3>
-    <p style="color:#aaa;font-size:12px;margin:0 0 16px">Daftar mandiri, buat password sendiri, gak perlu lapor. QR Anggota otomatis setelah ACC.</p>
+    <h3 style="margin:0 0 6px;color:var(--gold2)">Daftar Anggota Baru</h3>
+    <p style="color:#aaa;font-size:12px;margin:0 0 16px">Wajib pakai email yang terdaftar di aplikasi driver. Setelah daftar, QR Anggota otomatis dibuat setelah ACC Owner/Sekjen.</p>
     <div id="daftarSuccess" class="hidden"></div>
-    <div class="form-group"><label>Nama Lengkap *</label><input id="dNama" placeholder="Nama lengkap"></div>
-    <div class="form-group"><label>Email Driver *</label><input id="dEmail" type="email" placeholder="email di Maxim/inDrive/Lalamove"></div>
-    <div class="form-group"><label>No WA *</label><input id="dWa" placeholder="0813..."></div>
-    <div class="form-group"><label>Buat Password *</label><input id="dPass" type="password" placeholder="Buat password (min 6 karakter) - Untuk login mandiri"></div>
+    <div class="form-group"><label>Nama Lengkap *</label><input id="dNama" placeholder="Benny Lefianto Sandi Agung"></div>
+    <div class="form-group"><label>Email Driver *</label><input id="dEmail" type="email" placeholder="email di Maxim/inDrive"></div>
+    <div class="form-group"><label>No WA *</label><input id="dWa" placeholder="081333556398"></div>
     <div class="form-group"><label>Unit / Korwil</label><input id="dUnit" placeholder="Mojokerto"></div>
-    <div class="form-group"><label>Platform</label><select id="dPlatform"><option value="Maxim">Maxim</option><option value="inDrive">inDrive</option><option value="Gojek">Gojek</option><option value="Grab">Grab</option><option value="Lalamove">Lalamove</option><option value="Shopee Food">Shopee Food</option></select></div>
+    <div class="form-group"><label>Platform</label><select id="dPlatform"><option value="Maxim">Maxim</option><option value="inDrive">inDrive</option><option value="Gojek">Gojek</option><option value="Grab">Grab</option><option value="Maxim • inDrive" selected>Maxim • inDrive</option></select></div>
     <div class="form-group"><label>Level</label><select id="dLevel"><option value="MEMBER">MEMBER</option><option value="PREMIUM MEMBER">PREMIUM MEMBER</option></select></div>
-    <button class="btn" style="width:100%" onclick="daftarMandiri()">DAFTAR MANDIRI - GAK PERLU LAPOR</button>
+    <button class="btn" style="width:100%" onclick="daftarMandiri()">DAFTAR SEKARANG</button>
   </div>
 
+  <!-- ADMIN PANEL -->
   <div id="adminPanel" class="hidden">
     <div id="adminPanelInner" class="admin-panel">
       <h3 id="adminTitle">🔐 PANEL ADMIN</h3>
@@ -161,21 +106,19 @@ h1{font-size:28px;margin:12px 0 5px;letter-spacing:2px;text-align:center;color:v
         <h4 style="color:var(--gold2);font-size:12px;margin:14px 0 8px">⏳ PENDING ACC (<span id="pendingCount">0</span>)</h4>
         <div id="pendingList" class="admin-list"></div>
       </div>
-      <div style="margin-bottom:12px"><button onclick="quickAddLF5850()" style="background:#0d1b11;color:#8fe0a0;border:1px solid #315a3a;padding:8px 12px;border-radius:8px;font-size:11px;width:100%">⚡ FIX CEPAT: TAMBAH LF-5850-0926 (oqifirpro@gmail.com) YANG GAK SINKRON</button></div>
       <h4 style="color:var(--gold2);font-size:12px;margin:18px 0 8px">➕ TAMBAH ANGGOTA MANUAL</h4>
       <input id="newName" placeholder="Nama Lengkap">
       <input id="newNumber" placeholder="Nomor LF-...">
       <input id="newEmail" type="email" placeholder="Email driver">
       <input id="newWa" placeholder="WA (opsional)">
-      <input id="newPassAdmin" type="password" placeholder="Password (default = Nomor)">
       <select id="newLevel">
         <option value="MEMBER">MEMBER</option>
         <option value="PREMIUM MEMBER">PREMIUM MEMBER</option>
         <option value="PENGURUS">PENGURUS</option>
         <option value="SEKJEN PUSAT DPP">SEKJEN PUSAT DPP</option>
-        <option value="KETUA LANGGENG FAMILY MOJOKERTO">KETUA LANGGENG FAMILY MOJOKERTO</option>
+        <option value="PEMILIK / OWNER">PEMILIK / OWNER</option>
       </select>
-      <select id="newPlatform"><option value="Maxim">Maxim</option><option value="inDrive">inDrive</option><option value="Gojek">Gojek</option><option value="Grab">Grab</option><option value="Lalamove">Lalamove</option><option value="Shopee Food">Shopee Food</option></select>
+      <input id="newPlatform" placeholder="Platform (Maxim • inDrive)">
       <button onclick="addMember()">+ TAMBAH & BUAT QR</button>
       <div class="admin-actions">
         <button onclick="exportData()" style="background:#222;color:var(--gold2);border:1px solid #444">EXPORT JSON</button>
@@ -186,61 +129,39 @@ h1{font-size:28px;margin:12px 0 5px;letter-spacing:2px;text-align:center;color:v
     </div>
   </div>
 
+  <!-- LOGIN ADMIN (SECURE - TANPA BOCORAN ID/PASSWORD) -->
   <div id="loginAdmin" class="hidden">
     <div class="admin-panel">
       <h3>🔐 LOGIN ADMIN / SEKJEN DPP</h3>
-      <p style="color:#777;font-size:11px;margin:0 0 12px">Akses khusus Owner & Sekjen DPP</p>
+      <p style="color:#777;font-size:11px;margin:0 0 12px">Akses khusus Owner & Sekjen DPP Langgeng Family</p>
       <input id="adminUser" placeholder="Username">
       <input id="adminPass" type="password" placeholder="Password">
       <button onclick="doLogin()">LOGIN</button>
-      <p style="color:#555;font-size:10px;margin-top:12px;text-align:center">Login khusus Owner & Sekjen DPP</p>
-    </div>
-  </div>
-
-  
-  <!-- MODAL EDIT ANGGOTA - KETUA BISA EDIT TANPA LOGIN KE MASING-MASING -->
-  <div id="editModal" class="hidden" style="position:fixed;top:0;left:0;right:0;bottom:0;background:#000a;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px">
-    <div class="card" style="max-width:500px;width:100%;max-height:90vh;overflow:auto">
-      <h3 style="color:var(--gold2);margin:0 0 14px">✏️ EDIT ANGGOTA - KETUA AKSES LANGSUNG</h3>
-      <p style="display:none">hidden</p>
-      <div id="editResult" class="hidden" style="margin-bottom:10px"></div>
-      <div class="form-group"><label>Nomor Anggota (Tidak bisa diubah)</label><input id="editNumber" disabled style="opacity:0.5"></div>
-      <div class="form-group"><label>Nama Lengkap *</label><input id="editName" placeholder="Nama lengkap"></div>
-      <div class="form-group"><label>Email Driver *</label><input id="editEmail" type="email" placeholder="email"></div>
-      <div class="form-group"><label>WA *</label><input id="editWa" placeholder="WA"></div>
-      <div class="form-group"><label>Password *</label><input id="editPassword" type="text" placeholder="Password anggota"><small style="color:#666;font-size:10px;display:none">hidden</small></div>
-      <div class="form-group"><label>Platform</label><select id="editPlatform"><option value="Maxim">Maxim</option><option value="inDrive">inDrive</option><option value="Gojek">Gojek</option><option value="Grab">Grab</option><option value="Lalamove">Lalamove</option><option value="Shopee Food">Shopee Food</option></select></div>
-      <div class="form-group"><label>Level</label><select id="editLevel"><option value="MEMBER">MEMBER</option><option value="PREMIUM MEMBER">PREMIUM MEMBER</option><option value="PENGURUS">PENGURUS</option><option value="KETUA LANGGENG FAMILY MOJOKERTO">KETUA LANGGENG FAMILY MOJOKERTO</option><option value="SEKJEN PUSAT DPP">SEKJEN PUSAT DPP</option></select></div>
-      <div class="form-group"><label>Status</label><select id="editStatus"><option value="AKTIF">AKTIF</option><option value="NON-AKTIF">NON-AKTIF</option><option value="SUSPEND">SUSPEND</option></select></div>
-      <div style="display:flex;gap:8px;margin-top:14px">
-        <button class="btn" style="flex:1" onclick="saveEdit()">💾 SIMPAN - KETUA EDIT LANGSUNG</button>
-        <button onclick="closeEdit()" style="flex:1;background:#333;color:#fff;border:1px solid #555;padding:12px;border-radius:10px;cursor:pointer">BATAL</button>
-      </div>
-      <div style="display:flex;gap:8px;margin-top:8px">
-        <button onclick="accessAsMember()" style="flex:1;background:linear-gradient(135deg,#6bb8ff,#4a9eff);color:#000;border:0;padding:10px;border-radius:10px;font-weight:700;cursor:pointer;font-size:11px">👁️ AKSES & LIHAT QR TANPA LOGIN</button>
-      </div>
+      <p style="color:#555;font-size:10px;margin-top:12px;text-align:center">Login khusus Owner & Sekjen DPP<br>Hubungi Owner untuk akses login</p>
     </div>
   </div>
 
   <div class="footer">
     Portal Resmi Langgeng Family Mojokerto © 2026<br>
-    Ketua Langgeng Family Mojokerto: <b style="color:var(--gold2)">Benny Lefianto Sandi Agung</b> - WA 081333556398<br>
-    Sekjen: <b style="color:#8ec2ff">Cundhamani Caraka Gana. SE</b> - WA 081249060309
+    Owner: <b style="color:var(--gold2)">Benny Lefianto Sandi Agung</b> - LF-0256-0826 - WA 081333556398<br>
+    Sekjen Pusat DPP: <b style="color:#8ec2ff">Cundhamani Caraka Gana. SE</b> - LF-DPP-001 - carakagana@gmail.com<br>
+    QR Anggota = Identitas KTA (Bukan QRIS Pembayaran)<br>
+    Built from scratch - Final Version 2026
   </div>
 </div>
 
 <script>
+// === DATA DEFAULT - DARI AWAL SEPERTI FINISH SEKARANG ===
 const DEFAULT_MEMBERS = {
   "LF-0256-0826": {
     name:"Benny Lefianto Sandi Agung",
     number:"LF-0256-0826",
     email:"benny.lf@gmail.com",
-    password:"LF-0256-0826",
     status:"AKTIF",
-    level:"KETUA LANGGENG FAMILY MOJOKERTO",
+    level:"PEMILIK / OWNER",
     role:"owner",
     community:"Langgeng Family Mojokerto",
-    platform:"Maxim",
+    platform:"Maxim • inDrive • Shopee • Grab • Gojek",
     valid:"Seumur Hidup",
     wa:"081333556398"
   },
@@ -248,12 +169,11 @@ const DEFAULT_MEMBERS = {
     name:"Cundhamani Caraka Gana. SE",
     number:"LF-DPP-001",
     email:"carakagana@gmail.com",
-    password:"LF-DPP-001",
     status:"AKTIF",
     level:"SEKJEN PUSAT DPP",
     role:"sekjen",
     community:"DPP Langgeng Family Pusat",
-    platform:"Lalamove",
+    platform:"Pusat - Semua Platform",
     valid:"Seumur Hidup - Sekjen DPP",
     wa:"081249060309"
   }
@@ -264,18 +184,18 @@ try{ const s=localStorage.getItem('lf_members'); if(s){ const ex=JSON.parse(s); 
 let PENDING = [];
 try{ const p=localStorage.getItem('lf_pending'); if(p) PENDING=JSON.parse(p); }catch(e){}
 
+// Admin users - password = nomor anggota (secure, tidak ditampilkan di UI)
 const ADMIN_USERS = [
   {username:"benny", password:"LF-0256-0826", memberId:"LF-0256-0826", role:"owner", label:"OWNER - Benny Lefianto Sandi Agung"},
   {username:"owner", password:"LF-0256-0826", memberId:"LF-0256-0826", role:"owner", label:"OWNER"},
-  {username:"sekjen", password:"LF-DPP-001", memberId:"LF-DPP-001", role:"sekjen", label:"SEKJEN PUSAT DPP"},
-  {username:"caraka", password:"LF-DPP-001", memberId:"LF-DPP-001", role:"sekjen", label:"SEKJEN"},
+  {username:"sekjen", password:"LF-DPP-001", memberId:"LF-DPP-001", role:"sekjen", label:"SEKJEN PUSAT DPP - Cundhamani Caraka Gana SE"},
+  {username:"caraka", password:"LF-DPP-001", memberId:"LF-DPP-001", role:"sekjen", label:"SEKJEN PUSAT DPP"},
   {username:"cundhamani", password:"LF-DPP-001", memberId:"LF-DPP-001", role:"sekjen", label:"SEKJEN"},
   {username:"chundhamani", password:"LF-DPP-001", memberId:"LF-DPP-001", role:"sekjen", label:"SEKJEN"}
 ];
 let currentAdmin = null;
-let currentLoggedMember = null;
 
-function switchTab(t){
+function switchTab_original(t){
   document.getElementById('panelVerify').className = t==='verify'?'card':'card hidden';
   document.getElementById('panelLogin').className = t==='login'?'card':'card hidden';
   document.getElementById('panelDaftar').className = t==='daftar'?'card':'card hidden';
@@ -289,193 +209,29 @@ function getQrUrl(id){
   const url = base + "?id=" + encodeURIComponent(id);
   return "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" + encodeURIComponent(url);
 }
-// === FIREBASE SYNC VERSION ===
-function saveMembers(){
-  try{
-    localStorage.setItem('lf_members', JSON.stringify(MEMBERS));
-    // Sync to Firebase Cloud
-    if(window.db && window.dbRef){
-      const { getDatabase, ref, set } = window.firebase || {};
-      // Use global db
-      window.dbSet(window.dbRef(window.db, 'members'), MEMBERS).then(()=>{
-        console.log('✅ Members synced to Firebase');
-        showCloudStatus('☁️ Tersimpan di Cloud');
-      }).catch(e=>console.error('Firebase save error', e));
-    }
-  }catch(e){ console.error(e); }
-}
-function savePending(){
-  try{
-    localStorage.setItem('lf_pending', JSON.stringify(PENDING));
-    if(window.db && window.dbRef){
-      window.dbSet(window.dbRef(window.db, 'pending'), PENDING).then(()=>{
-        console.log('✅ Pending synced to Firebase');
-      }).catch(e=>console.error('Firebase pending error', e));
-    }
-  }catch(e){ console.error(e); }
-}
-
-function showCloudStatus(msg){
-  let el = document.getElementById('cloudStatus');
-  if(!el){
-    el = document.createElement('div');
-    el.id='cloudStatus';
-    el.style.cssText='position:fixed;bottom:20px;right:20px;background:#0d1b11;border:1px solid #50c878;color:#8fe0a0;padding:8px 12px;border-radius:8px;font-size:11px;z-index:9999;transition:0.3s';
-    document.body.appendChild(el);
-  }
-  el.innerText=msg;
-  el.style.opacity='1';
-  setTimeout(()=>el.style.opacity='0',3000);
-}
-
-// === LOAD FROM FIREBASE ===
-function loadFromFirebase(){
-  if(!window.db) return;
-  const membersRef = window.dbRef(window.db, 'members');
-  const pendingRef = window.dbRef(window.db, 'pending');
-  
-  window.dbOnValue(membersRef, (snap)=>{
-    const data = snap.val();
-    if(data && Object.keys(data).length > 0){
-      // Merge with local only if cloud has more data
-      const cloudCount = Object.keys(data).length;
-      const localCount = Object.keys(MEMBERS).length;
-      if(cloudCount >= localCount || confirmCloudNewer){
-        MEMBERS = data;
-        localStorage.setItem('lf_members', JSON.stringify(MEMBERS));
-        console.log('☁️ Loaded members from cloud:', cloudCount);
-        renderAll();
-        // Auto verify if searching
-        const idInput = document.getElementById('memberId');
-        if(idInput && idInput.value) verify();
-      }
-    } else {
-      // First time - push local to cloud
-      if(Object.keys(MEMBERS).length>0){
-        window.dbSet(membersRef, MEMBERS);
-      }
-    }
-  });
-  
-  window.dbOnValue(pendingRef, (snap)=>{
-    const data = snap.val();
-    if(data){
-      PENDING = Array.isArray(data) ? data : Object.values(data);
-      localStorage.setItem('lf_pending', JSON.stringify(PENDING));
-      console.log('☁️ Loaded pending from cloud:', PENDING.length);
-      renderAll();
-    }
-  });
-}
-let confirmCloudNewer = true;
-setTimeout(()=>{
-  if(window.db){
-    loadFromFirebase();
-    // Quick fix for LF-5850 if not exists in cloud
-    setTimeout(()=>{
-      if(!MEMBERS['LF-5850-0926']){
-        console.log('Adding LF-5850-0926 to cloud...');
-        MEMBERS['LF-5850-0926'] = {name:'Anggota Baru', number:'LF-5850-0926', email:'oqifirpro@gmail.com', password:'Mojokerto71', status:'AKTIF', level:'MEMBER', role:'member', community:'Langgeng Family Mojokerto', platform:'Maxim', valid:'Aktif', wa:'-', unit:'Mojokerto'};
-        saveMembers();
-        renderAll();
-      }
-    },2000);
-  }
-},1500);
-
+function saveMembers(){ localStorage.setItem('lf_members', JSON.stringify(MEMBERS)); }
+function savePending(){ localStorage.setItem('lf_pending', JSON.stringify(PENDING)); }
 function generateNumber(){ const d=new Date(); const mm=String(d.getMonth()+1).padStart(2,'0'); const yy=String(d.getFullYear()).slice(-2); const rand=String(Math.floor(Math.random()*9000)+1000); return 'LF-'+rand+'-'+mm+yy; }
 
-// LOGIN DENGAN PASSWORD + AKSES UBAH PASSWORD SAAT SUDAH LOGIN
+// Login Anggota dengan email driver
 function loginMember(){
   const email=document.getElementById('lEmail').value.trim().toLowerCase();
   const number=document.getElementById('lNumber').value.trim().toUpperCase();
-  const pass=document.getElementById('lPass').value.trim();
   const box=document.getElementById('loginResult');
   const dash=document.getElementById('memberDashboard');
-  if(!email||!number||!pass){ box.className='error'; box.innerHTML='Email, nomor, dan password wajib!'; return; }
+  if(!email||!number){ box.className='error'; box.innerHTML='Email dan nomor wajib!'; return; }
   if(!isValidEmail(email)){ box.className='error'; box.innerHTML='Email tidak valid!'; return; }
   const m=MEMBERS[number];
-  if(!m){ let pend=null; for(let i=0;i<PENDING.length;i++) if(PENDING[i].number===number) pend=PENDING[i]; if(pend){ if((pend.email||'').toLowerCase()!==email){ box.className='error'; box.innerHTML='Email tidak cocok! Terdaftar: '+pend.email; return; } box.className='error'; box.innerHTML='⏳ PENDING - tunggu ACC. Email: '+email; return; } box.className='error'; box.innerHTML='Nomor tidak ditemukan.'; return; }
+  if(!m){ let pend=null; for(let i=0;i<PENDING.length;i++) if(PENDING[i].number===number) pend=PENDING[i]; if(pend){ if((pend.email||'').toLowerCase()!==email){ box.className='error'; box.innerHTML='Email tidak cocok! Terdaftar: '+pend.email; return; } box.className='error'; box.innerHTML='⏳ PENDING - tunggu ACC Owner/Sekjen. Email: '+email; return; } box.className='error'; box.innerHTML='Nomor tidak ditemukan.'; return; }
   if((m.email||'').toLowerCase() && (m.email||'').toLowerCase()!==email){ box.className='error'; box.innerHTML='Email tidak cocok! Terdaftar: '+m.email; return; }
-  const realPass = m.password || m.number || '';
-  if(pass !== realPass){ box.className='error'; box.innerHTML='❌ Password salah! Default = Nomor Anggota ('+m.number+'). Jika lupa, pakai fitur Lupa Password di bawah - gak perlu lapor owner!'; return; }
-  currentLoggedMember = m.number;
-  box.className='success'; box.innerHTML='✅ Login berhasil! '+m.name+' - Sekarang bisa ubah password mandiri di dashboard bawah.';
+  box.className='success'; box.innerHTML='✅ Login berhasil! Email driver: '+email;
   const isOwner=m.role==='owner'; const isSekjen=m.role==='sekjen';
   const cls=isOwner?'owner':(isSekjen?'sekjen':''); const badge=isOwner?'<span class="badge-owner">OWNER</span>':(isSekjen?'<span class="badge-sekjen">SEKJEN PUSAT DPP</span>':''); const icon=isOwner?' 👑':(isSekjen?' 🏛️':'');
   const qrUrl=getQrUrl(m.number);
-  dash.className=''; 
-  dash.innerHTML=`<div class="status ${cls}"><span class="dot"></span> ${isOwner?'PEMILIK PORTAL':(isSekjen?'SEKJEN PUSAT DPP':'LOGIN AKTIF')} ${badge}</div><div class="grid"><div class="item"><div class="label">Nama</div><div class="value">${m.name}${icon}</div></div><div class="item"><div class="label">Nomor</div><div class="value">${m.number}</div></div><div class="item"><div class="label">Email Driver</div><div class="value">${m.email||'-'}</div></div><div class="item"><div class="label">WA</div><div class="value">${m.wa||'-'}</div></div><div class="item"><div class="label">Status</div><div class="value">${m.level}</div></div><div class="item"><div class="label">Platform</div><div class="value">${m.platform}</div></div></div>
-  <div class="qr-box ${cls}"><div class="label">QR ANGGOTA - KTA (Bukan QRIS)</div><img src="${qrUrl}" alt="QR ${m.number}"><p style="color:#aaa;font-size:11px;margin-top:10px">QR identitas<br><b>${m.number}</b><br>${m.name}</p><button class="btn" style="margin-top:10px" onclick="downloadQr('${m.number}')">📥 DOWNLOAD QR ANGGOTA</button></div>
-  
-  <div style="margin-top:18px;border:1px dashed #d8a83e;background:#1a160e;border-radius:16px;padding:16px">
-    <h4 style="color:var(--gold2);margin:0 0 10px;font-size:13px">🔑 AKSES 1: UBAH PASSWORD SAAT SUDAH LOGIN (MANDIRI)</h4>
-    <p style="color:#50c878;font-size:10px;margin:0 0 12px">✅ Gak perlu lapor owner - Bisa ubah password mandiri saat sudah login!</p>
-    <div id="changePassResult" class="hidden" style="margin-bottom:10px"></div>
-    <div class="form-group"><label>Password Lama *</label><input id="oldPass" type="password" placeholder="Password lama"></div>
-    <div class="form-group"><label>Password Baru *</label><input id="newPass" type="password" placeholder="Min 6 karakter"></div>
-    <div class="form-group"><label>Konfirmasi Password Baru *</label><input id="confirmPass" type="password" placeholder="Ulangi password baru"></div>
-    <button class="btn" style="width:100%" onclick="changePassword()">💾 UBAH PASSWORD - MANDIRI SAAT LOGIN</button>
-  </div>
-  <div style="margin-top:12px"><button onclick="logoutMember()" style="background:#331111;color:#ffaaaa;border:1px solid #553333;padding:8px 12px;border-radius:8px;font-size:11px;width:100%">LOGOUT</button></div>`;
+  dash.className=''; dash.innerHTML=`<div class="status ${cls}"><span class="dot"></span> ${isOwner?'PEMILIK PORTAL':(isSekjen?'SEKJEN PUSAT DPP':'LOGIN AKTIF')} ${badge}</div><div class="grid"><div class="item"><div class="label">Nama</div><div class="value">${m.name}${icon}</div></div><div class="item"><div class="label">Nomor</div><div class="value">${m.number}</div></div><div class="item"><div class="label">Email Driver</div><div class="value">${m.email||'-'}</div></div><div class="item"><div class="label">WA</div><div class="value">${m.wa||'-'}</div></div><div class="item"><div class="label">Status</div><div class="value">${m.level}</div></div><div class="item"><div class="label">Komunitas</div><div class="value">${m.community}</div></div></div><div class="qr-box ${cls}"><div class="label">QR ANGGOTA - KTA (Bukan QRIS Pembayaran)</div><img src="${qrUrl}" alt="QR Anggota ${m.number}"><p style="color:#aaa;font-size:11px;margin-top:10px">QR identitas anggota<br>Scan untuk verifikasi: <b>${m.number}</b><br>${m.name}</p><p style="color:#666;font-size:10px">Email: ${m.email} | WA: ${m.wa}</p><button class="btn" style="margin-top:10px" onclick="downloadQr('${m.number}')">📥 DOWNLOAD QR ANGGOTA</button></div>`;
 }
 
-function logoutMember(){
-  currentLoggedMember=null;
-  document.getElementById('memberDashboard').className='hidden';
-  document.getElementById('loginResult').className='hidden';
-  document.getElementById('lPass').value='';
-}
-function showForgot(){ document.getElementById('forgotBox').className=''; document.getElementById('forgotResult').className='hidden'; }
-function hideForgot(){ document.getElementById('forgotBox').className='hidden'; }
-
-function forgotPassword(){
-  const email=document.getElementById('fEmail').value.trim().toLowerCase();
-  const number=document.getElementById('fNumber').value.trim().toUpperCase();
-  const wa=document.getElementById('fWa').value.trim();
-  const newPass=document.getElementById('fNewPass').value.trim();
-  const resultBox=document.getElementById('forgotResult');
-  if(!email||!number||!wa||!newPass){ resultBox.className='error'; resultBox.innerHTML='❌ Semua wajib diisi!'; return; }
-  if(newPass.length < 6){ resultBox.className='error'; resultBox.innerHTML='❌ Minimal 6 karakter!'; return; }
-  if(!isValidEmail(email)){ resultBox.className='error'; resultBox.innerHTML='❌ Email tidak valid!'; return; }
-  const m=MEMBERS[number];
-  if(!m){ resultBox.className='error'; resultBox.innerHTML='❌ Nomor tidak ditemukan!'; return; }
-  if((m.email||'').toLowerCase() !== email){ resultBox.className='error'; resultBox.innerHTML='❌ Email tidak cocok! Terdaftar: '+(m.email||'-'); return; }
-  // Mandiri - cukup email + nomor cocok, WA sebagai verifikasi tambahan tapi gak strict untuk mandiri
-  if((m.email||'').toLowerCase()===email && m.number===number){
-    MEMBERS[number].password=newPass;
-    saveMembers();
-    resultBox.className='success'; 
-    resultBox.innerHTML='✅ <b>Password berhasil direset mandiri di portal!</b><br>Nomor: '+number+'<br>Password baru: <b>'+newPass+'</b><br><br>✅ Gak perlu lapor owner - Langsung login pakai password baru!';
-    document.getElementById('lEmail').value=email;
-    document.getElementById('lNumber').value=number;
-    document.getElementById('lPass').value=newPass;
-    setTimeout(()=>{ hideForgot(); document.getElementById('loginResult').className='success'; document.getElementById('loginResult').innerHTML='✅ Password sudah direset mandiri! Login pakai password baru.'; }, 1500);
-    return;
-  }
-  resultBox.className='error'; resultBox.innerHTML='❌ Verifikasi gagal!';
-}
-
-function changePassword(){
-  const oldP=document.getElementById('oldPass').value.trim();
-  const newP=document.getElementById('newPass').value.trim();
-  const confP=document.getElementById('confirmPass').value.trim();
-  const resultBox=document.getElementById('changePassResult');
-  if(!currentLoggedMember){ resultBox.className='error'; resultBox.innerHTML='Belum login!'; return; }
-  const m=MEMBERS[currentLoggedMember];
-  if(!m){ resultBox.className='error'; resultBox.innerHTML='Data tidak ditemukan!'; return; }
-  const realPass = m.password || m.number || '';
-  if(oldP !== realPass){ resultBox.className='error'; resultBox.innerHTML='❌ Password lama salah!'; return; }
-  if(newP.length < 6){ resultBox.className='error'; resultBox.innerHTML='❌ Minimal 6 karakter!'; return; }
-  if(newP !== confP){ resultBox.className='error'; resultBox.innerHTML='❌ Konfirmasi tidak cocok!'; return; }
-  MEMBERS[currentLoggedMember].password = newP;
-  saveMembers();
-  resultBox.className='success'; resultBox.innerHTML='✅ <b>Password berhasil diubah mandiri saat login!</b><br>Password baru: <b>'+newP+'</b><br>Gak perlu lapor owner - Simpan baik-baik!';
-  document.getElementById('oldPass').value=''; document.getElementById('newPass').value=''; document.getElementById('confirmPass').value='';
-  document.getElementById('lPass').value=newP;
-}
-
-// Other functions
+// Secret tap 5x untuk admin
 let tapCount=0; function secretTap(){ tapCount++; if(tapCount>=5){ tapCount=0; showLogin(); } setTimeout(()=>tapCount=0,3000); }
 function showLogin(){ document.getElementById('loginAdmin').className=''; document.getElementById('adminPanel').className='hidden'; }
 function doLogin(){
@@ -491,180 +247,56 @@ function doLogin(){
     if(found.role==='sekjen'){
       inner.className='admin-panel sekjen';
       title.innerHTML='🏛️ PANEL SEKJEN PUSAT DPP - Cundhamani Caraka Gana. SE';
-      desc.innerHTML='Login sebagai <b style="color:#8ec2ff">SEKJEN PUSAT DPP</b><br>Email: carakagana@gmail.com | WA: 081249060309';
+      desc.innerHTML='Login sebagai <b style="color:#8ec2ff">SEKJEN PUSAT DPP - Cundhamani Caraka Gana. SE</b><br>Email: carakagana@gmail.com | WA: 081249060309 - Akses keanggotaan (QR Anggota bukan QRIS bayar)';
     } else {
       inner.className='admin-panel';
-      title.innerHTML='🔐 PANEL KETUA - Benny Lefianto Sandi Agung';
-      desc.innerHTML='Login sebagai <b style="color:var(--gold2)">OWNER</b><br>LF-0256-0826 | WA: 081333556398';
+      title.innerHTML='🔐 PANEL OWNER - Benny Lefianto Sandi Agung';
+      desc.innerHTML='Login sebagai <b style="color:var(--gold2)">OWNER - Benny Lefianto Sandi Agung</b><br>LF-0256-0826 | WA: 081333556398 - Akses penuh';
     }
     renderAll();
-  } else { alert('Login gagal!'); }
+  } else { alert('Login gagal! Hubungi Owner untuk akses.'); }
 }
 function logoutAdmin(){ localStorage.removeItem('lf_admin'); localStorage.removeItem('lf_admin_role'); localStorage.removeItem('lf_admin_user'); currentAdmin=null; document.getElementById('adminPanel').className='hidden'; }
+
 function daftarMandiri(){
   const nama=document.getElementById('dNama').value.trim();
   const email=document.getElementById('dEmail').value.trim().toLowerCase();
   const wa=document.getElementById('dWa').value.trim();
-  const pass=document.getElementById('dPass').value.trim();
   const unit=document.getElementById('dUnit').value.trim()||'Mojokerto';
   const platform=document.getElementById('dPlatform').value;
   const level=document.getElementById('dLevel').value;
-  if(!nama||!email||!wa||!pass){ alert('Nama, Email, WA, Password wajib!'); return; }
-  if(pass.length < 6){ alert('Password min 6 karakter!'); return; }
+  if(!nama||!email||!wa){ alert('Nama, Email, WA wajib!'); return; }
   if(!isValidEmail(email)){ alert('Email tidak valid!'); return; }
   for(let k in MEMBERS) if((MEMBERS[k].email||'').toLowerCase()===email){ alert('Email sudah terdaftar: '+k); return; }
   for(let i=0;i<PENDING.length;i++) if(PENDING[i].email.toLowerCase()===email){ alert('Email sudah pending: '+PENDING[i].number); return; }
   let number=generateNumber(); while(MEMBERS[number]) number=generateNumber();
-  const data={name:nama,number:number,email:email,password:pass,wa:wa,unit:unit,level:level,status:"PENDING",role:"member",community:"Langgeng Family Mojokerto",platform:platform,valid:"Menunggu Approval",created:new Date().toISOString()};
+  const data={name:nama,number:number,email:email,wa:wa,unit:unit,level:level,status:"PENDING",role:"member",community:"Langgeng Family Mojokerto",platform:platform,valid:"Menunggu Approval",created:new Date().toISOString()};
   PENDING.push(data); savePending();
   document.getElementById('daftarSuccess').className='success';
-  document.getElementById('daftarSuccess').innerHTML=`✅ Daftar berhasil! Nomor: <b>${number}</b> Email: <b>${email}</b> Pass: <b>${pass}</b> - PENDING. Gak perlu lapor, QR otomatis setelah ACC.`;
-  document.getElementById('dNama').value=''; document.getElementById('dEmail').value=''; document.getElementById('dWa').value=''; document.getElementById('dPass').value=''; document.getElementById('dUnit').value='';
+  document.getElementById('daftarSuccess').innerHTML=`✅ Daftar berhasil! Nomor: <b>${number}</b> Email: <b>${email}</b> Status PENDING. QR Anggota akan otomatis dibuat setelah ACC.`;
+  document.getElementById('dNama').value=''; document.getElementById('dEmail').value=''; document.getElementById('dWa').value=''; document.getElementById('dUnit').value='';
 }
-function approveMember(idx){ const p=PENDING[idx]; if(!p) return; MEMBERS[p.number]={name:p.name,number:p.number,email:p.email,password:p.password||p.number,status:"AKTIF",level:p.level,role:"member",community:p.community,platform:p.platform,valid:"Aktif",wa:p.wa,unit:p.unit}; PENDING.splice(idx,1); saveMembers(); savePending(); renderAll(); alert('ACC '+p.name+' - QR: '+p.number+' siap!'); }
+function approveMember(idx){ const p=PENDING[idx]; if(!p) return; MEMBERS[p.number]={name:p.name,number:p.number,email:p.email,status:"AKTIF",level:p.level,role:"member",community:p.community,platform:p.platform,valid:"Aktif",wa:p.wa,unit:p.unit}; PENDING.splice(idx,1); saveMembers(); savePending(); renderAll(); alert('ACC '+p.name+' - QR Anggota: '+p.number+' siap!'); }
 function rejectMember(idx){ if(confirm('Tolak?')){ PENDING.splice(idx,1); savePending(); renderAll(); } }
 function addMember(){
   const name=document.getElementById('newName').value.trim();
   const number=document.getElementById('newNumber').value.trim().toUpperCase();
   const email=document.getElementById('newEmail').value.trim().toLowerCase();
   const wa=document.getElementById('newWa').value.trim()||'-';
-  const passAdmin=document.getElementById('newPassAdmin').value.trim()||number;
   const level=document.getElementById('newLevel').value;
-  const platform=document.getElementById('newPlatform').value;
+  const platform=document.getElementById('newPlatform').value.trim()||"Maxim • inDrive";
   if(!name||!number||!email){ alert('Nama, nomor, email wajib!'); return; }
   if(!isValidEmail(email)){ alert('Email tidak valid'); return; }
   let role='member'; if(level.includes('OWNER')) role='owner'; else if(level.includes('SEKJEN')) role='sekjen';
   if(role==='owner' && currentAdmin && currentAdmin.role!=='owner'){ alert('Hanya Owner bisa tambah Owner!'); return; }
-  MEMBERS[number]={name:name,number:number,email:email,password:passAdmin,status:"AKTIF",level:level,role:role,community: role==='sekjen'?'DPP Langgeng Family Pusat':'Langgeng Family Mojokerto',platform:platform,valid:"Aktif",wa:wa};
-  saveMembers(); document.getElementById('newName').value=''; document.getElementById('newNumber').value=''; document.getElementById('newEmail').value=''; document.getElementById('newWa').value=''; document.getElementById('newPassAdmin').value=''; renderAll(); alert('Ditambahkan '+name+' - QR: '+number+' Pass: '+passAdmin);
+  MEMBERS[number]={name:name,number:number,email:email,status:"AKTIF",level:level,role:role,community: role==='sekjen'?'DPP Langgeng Family Pusat':'Langgeng Family Mojokerto',platform:platform,valid:"Aktif",wa:wa};
+  saveMembers(); document.getElementById('newName').value=''; document.getElementById('newNumber').value=''; document.getElementById('newEmail').value=''; document.getElementById('newWa').value=''; renderAll(); alert('Ditambahkan '+name+' - QR: '+number);
 }
-let editingNumber = null;
-function editMember(num){
-  const m=MEMBERS[num]; if(!m) return;
-  editingNumber=num;
-  document.getElementById('editNumber').value=m.number;
-  document.getElementById('editName').value=m.name;
-  document.getElementById('editEmail').value=m.email||'';
-  document.getElementById('editWa').value=m.wa||'';
-  document.getElementById('editPassword').value=m.password||m.number;
-  document.getElementById('editPlatform').value=m.platform||'Maxim';
-  document.getElementById('editLevel').value=m.level||'MEMBER';
-  document.getElementById('editStatus').value=m.status||'AKTIF';
-  document.getElementById('editModal').className='';
-  document.getElementById('editResult').className='hidden';
-}
-
-function closeEdit(){
-  document.getElementById('editModal').className='hidden';
-  editingNumber=null;
-}
-
-function saveEdit(){
-  if(!editingNumber){ alert('Error!'); return; }
-  const m=MEMBERS[editingNumber]; if(!m){ alert('Data tidak ditemukan!'); return; }
-  const name=document.getElementById('editName').value.trim();
-  const email=document.getElementById('editEmail').value.trim().toLowerCase();
-  const wa=document.getElementById('editWa').value.trim();
-  const pass=document.getElementById('editPassword').value.trim();
-  const platform=document.getElementById('editPlatform').value;
-  const level=document.getElementById('editLevel').value;
-  const status=document.getElementById('editStatus').value;
-  const resultBox=document.getElementById('editResult');
-  
-  if(!name||!email||!wa||!pass){ resultBox.className='error'; resultBox.innerHTML='❌ Nama, Email, WA, Password wajib!'; return; }
-  if(!isValidEmail(email)){ resultBox.className='error'; resultBox.innerHTML='❌ Email tidak valid!'; return; }
-  if(pass.length < 6){ resultBox.className='error'; resultBox.innerHTML='❌ Password min 6 karakter!'; return; }
-  
-  // Ketua bisa edit tanpa login ke masing-masing anggota - langsung update
-  MEMBERS[editingNumber].name=name;
-  MEMBERS[editingNumber].email=email;
-  MEMBERS[editingNumber].wa=wa;
-  MEMBERS[editingNumber].password=pass;
-  MEMBERS[editingNumber].platform=platform;
-  MEMBERS[editingNumber].level=level;
-  MEMBERS[editingNumber].status=status;
-  
-  saveMembers();
-  renderAll();
-  resultBox.className='success'; resultBox.innerHTML='✅ <b>Berhasil diedit!</b><br>'+name+' - '+editingNumber+' sudah diupdate!';
-  setTimeout(()=>{ closeEdit(); alert('✅ '+name+' berhasil diedit!'); }, 800);
-}
-
-function accessMemberDirect(num){
-  // Ketua bisa akses & lihat anggota tanpa login ke masing-masing anggota
-  const m=MEMBERS[num]; if(!m) return;
-  const qrUrl=getQrUrl(m.number);
-  const isOwner=m.role==='owner'; const isSekjen=m.role==='sekjen';
-  const cls=isOwner?'owner':(isSekjen?'sekjen':''); const badge=isOwner?'<span class="badge-owner">KETUA</span>':(isSekjen?'<span class="badge-sekjen">SEKJEN</span>':'');
-  
-  // Switch to verify tab and show member data - akses langsung tanpa password
-  switchTab('verify');
-  document.getElementById('memberId').value=m.number;
-  const box=document.getElementById('result');
-  box.className='';
-  box.innerHTML=`<div class="status ${cls}"><span class="dot"></span> AKSES KETUA ${badge} - Ketua bisa akses langsung!</div>
-  <div class="grid"><div class="item"><div class="label">Nama</div><div class="value">${m.name}</div></div><div class="item"><div class="label">Nomor</div><div class="value">${m.number}</div></div><div class="item"><div class="label">Email</div><div class="value">${m.email||'-'}</div></div><div class="item"><div class="label">WA</div><div class="value">${m.wa||'-'}</div></div><div class="item"><div class="label">Password (Ketua bisa lihat)</div><div class="value" style="color:var(--gold2)">${m.password||m.number}</div></div><div class="item"><div class="label">Platform</div><div class="value">${m.platform}</div></div><div class="item"><div class="label">Status</div><div class="value">${m.level} - ${m.status}</div></div><div class="item"><div class="label">Komunitas</div><div class="value">${m.community}</div></div></div>
-  <div class="qr-box ${cls}"><div class="label">QR ANGGOTA - AKSES KETUA TANPA LOGIN</div><img src="${qrUrl}" alt="QR ${m.number}"><p style="color:#aaa;font-size:11px;margin-top:10px"><b>${m.number}</b><br>${m.name}<br><span style="color:var(--gold2);display:none">hidden</span></p><button class="btn" style="margin-top:10px" onclick="downloadQr('${m.number}')">📥 DOWNLOAD QR</button> <button class="btn" style="margin-top:10px;background:linear-gradient(135deg,#6bb8ff,#4a9eff)" onclick="editMember('${m.number}')">✏️ EDIT ANGGOTA INI</button></div>`;
-  window.scrollTo({top:0, behavior:'smooth'});
-}
-
-function accessAsMember(){
-  // Dari modal edit, akses langsung QR tanpa login
-  if(!editingNumber) return;
-  closeEdit();
-  accessMemberDirect(editingNumber);
-}
-
-function deleteMember(num){ const m=MEMBERS[num]; if(!m) return; if(m.role==='owner'){ alert('Tidak bisa hapus KETUA!'); return; } if(m.role==='sekjen' && currentAdmin && currentAdmin.role!=='owner'){ alert('Hanya Ketua bisa hapus Sekjen!'); return; } if(confirm('Hapus '+num+' - '+m.name+'?')){ delete MEMBERS[num]; saveMembers(); renderAll(); } }
-function resetPassword(num){ const m=MEMBERS[num]; if(!m) return; const newPass=prompt('Reset password '+m.name+' ('+num+')\nPassword baru (min 6):', m.password||m.number); if(newPass===null) return; if(newPass.trim().length < 6){ alert('Min 6 karakter!'); return; } MEMBERS[num].password=newPass.trim(); saveMembers(); renderAll(); alert('✅ Password '+m.name+' jadi: '+newPass.trim()); }
-
-function exportPendingForKetua(){
-  if(PENDING.length===0){ alert('Tidak ada pending di HP ini! Daftar di HP anggota dulu, baru export.'); return; }
-  const data = JSON.stringify(PENDING, null, 2);
-  const waText = `*EXPORT PENDING LANGGENG FAMILY*\n\nData pending dari HP anggota:\n\n${data}\n\nSilakan import di HP Ketua di portal.vercel.app`;
-  // Copy to clipboard
-  navigator.clipboard.writeText(data).then(()=>{ alert('✅ Data pending dicopy!\n\n'+data+'\n\nKirim ke Ketua via WA, Ketua tinggal Import di portal!'); }).catch(()=>{ prompt('Copy data ini kirim ke Ketua:', data); });
-}
-
-function importPending(){
-  const txt = document.getElementById('importText').value.trim();
-  if(!txt){ alert('Paste JSON dulu!'); return; }
-  try{
-    const imported = JSON.parse(txt);
-    const arr = Array.isArray(imported) ? imported : [imported];
-    let added=0;
-    for(let p of arr){
-      if(!p.number) continue;
-      // Check if already exists
-      let exists=false;
-      for(let ex of PENDING) if(ex.number===p.number){ exists=true; break; }
-      if(MEMBERS[p.number]) exists=true;
-      if(!exists){ PENDING.push(p); added++; }
-    }
-    savePending();
-    renderAll();
-    document.getElementById('importBox').className='hidden';
-    document.getElementById('importText').value='';
-    alert('✅ Berhasil import '+added+' pending! Sekarang muncul di PENDING ACC ('+PENDING.length+') - Silakan ACC!');
-  }catch(e){
-    alert('❌ JSON tidak valid! '+e.message);
-  }
-}
-
-// Quick add for the case LF-5850-0926 that is not sync
-function quickAddLF5850(){
-  if(MEMBERS['LF-5850-0926']){ alert('LF-5850-0926 sudah ada!'); return; }
-  MEMBERS['LF-5850-0926'] = {name:'Anggota Baru', number:'LF-5850-0926', email:'oqifirpro@gmail.com', password:'Mojokerto71', status:'AKTIF', level:'MEMBER', role:'member', community:'Langgeng Family Mojokerto', platform:'Maxim', valid:'Aktif', wa:'-', unit:'Mojokerto'};
-  saveMembers();
-  renderAll();
-  alert('✅ LF-5850-0926 (oqifirpro@gmail.com) berhasil ditambahkan manual! Sekarang bisa diverifikasi!');
-}
-
+function deleteMember(num){ const m=MEMBERS[num]; if(!m) return; if(m.role==='owner'){ alert('Tidak bisa hapus OWNER!'); return; } if(m.role==='sekjen' && currentAdmin && currentAdmin.role!=='owner'){ alert('Hanya Owner bisa hapus Sekjen!'); return; } if(confirm('Hapus '+num+'?')){ delete MEMBERS[num]; saveMembers(); renderAll(); } }
 function renderAll(){
-
   const pl=document.getElementById('pendingList'); const pc=document.getElementById('pendingCount'); pc.innerText=PENDING.length;
   if(PENDING.length===0) pl.innerHTML='<div style="color:#666;font-size:12px">Tidak ada pending</div>'; else { let h=''; for(let i=0;i<PENDING.length;i++){ const m=PENDING[i]; h+=`<div><span><b>${m.number}</b> - ${m.name}<br><small style="color:#aaa">${m.email} | ${m.unit} | ${m.wa}</small></span><span><button onclick="approveMember(${i})" style="background:#0d1b11;color:#8fe0a0;border:1px solid #315a3a;padding:6px 10px;border-radius:8px;font-size:11px">ACC</button> <button onclick="rejectMember(${i})" style="background:#331111;color:#ffaaaa;border:1px solid #553333;padding:6px 8px;border-radius:8px;font-size:11px">X</button></span></div>`; } pl.innerHTML=h; }
-  const list=document.getElementById('adminList'); const mc=document.getElementById('memberCount'); const vals=Object.values(MEMBERS); mc.innerText=vals.length; let html=''; for(let mm of vals){ let badge=''; if(mm.role==='owner') badge=' 👑'; else if(mm.role==='sekjen') badge=' 🏛️'; const qrBtn = `<button onclick="downloadQr('${mm.number}')" style="background:#222;color:var(--gold2);border:1px solid #444;padding:4px 8px;border-radius:6px;font-size:10px;margin-left:6px">QR</button>`; const editBtn = `<button onclick="editMember('${mm.number}')" style="background:#1a160e;color:var(--gold2);border:1px solid #453619;padding:4px 8px;border-radius:6px;font-size:10px;margin-left:4px">✏️ Edit</button>`; const aksesBtn = `<button onclick="accessMemberDirect('${mm.number}')" style="background:#0e1524;color:#8ec2ff;border:1px solid #4a9eff44;padding:4px 6px;border-radius:6px;font-size:9px;margin-left:4px">👁️ Akses</button>`; html+=`<div style="flex-direction:column;align-items:flex-start"><div style="width:100%"><b>${mm.number}</b> - ${mm.name}${badge}<br><small style="color:#666">${mm.email||'-'} | ${mm.level} | ${mm.wa||'-'} | ${mm.platform}</small></div><div style="display:flex;gap:4px;margin-top:6px;flex-wrap:wrap">${qrBtn}${editBtn}${aksesBtn}<span onclick="deleteMember('${mm.number}')" style="color:#ff6666;cursor:pointer;margin-left:6px;font-size:11px;border:1px solid #553333;padding:3px 6px;border-radius:6px;background:#331111">Hapus</span></div></div>`; } list.innerHTML=html;
+  const list=document.getElementById('adminList'); const mc=document.getElementById('memberCount'); const vals=Object.values(MEMBERS); mc.innerText=vals.length; let html=''; for(let mm of vals){ let badge=''; if(mm.role==='owner') badge=' 👑'; else if(mm.role==='sekjen') badge=' 🏛️'; const qrBtn = `<button onclick="downloadQr('${mm.number}')" style="background:#222;color:var(--gold2);border:1px solid #444;padding:4px 8px;border-radius:6px;font-size:10px;margin-left:6px">QR</button>`; html+=`<div><span><b>${mm.number}</b> - ${mm.name}${badge}<br><small style="color:#666">${mm.email||'-'} | ${mm.level} | ${mm.wa||'-'}</small></span><span>${qrBtn} <span onclick="deleteMember('${mm.number}')" style="color:#ff6666;cursor:pointer;margin-left:6px">Hapus</span></span></div>`; } list.innerHTML=html;
 }
 function exportData(){ const a=document.createElement('a'); a.href="data:text/json;charset=utf-8,"+encodeURIComponent(JSON.stringify({members:MEMBERS,pending:PENDING},null,2)); a.download='anggota-langgeng-family.json'; a.click(); }
 function downloadQr(num){ const url=getQrUrl(num); window.open(url,'_blank'); }
@@ -673,11 +305,12 @@ function verify(e){
   if(!m){ let pend=null; for(let i=0;i<PENDING.length;i++) if(PENDING[i].number===id) pend=PENDING[i]; if(pend){ box.className=""; box.innerHTML=`<div class="status pending"><span class="dot" style="background:var(--gold)"></span> PENDING — ${pend.email} - ${pend.wa}</div>`; return false; } box.className=""; box.innerHTML='<div class="error">Tidak ditemukan. Daftar pakai email driver.</div>'; return false; }
   const isOwner=m.role==='owner'; const isSekjen=m.role==='sekjen'; const statusClass=isOwner?'status owner':(isSekjen?'status sekjen':'status'); const badge=isOwner?'<span class="badge-owner">OWNER</span>':(isSekjen?'<span class="badge-sekjen">SEKJEN PUSAT DPP</span>':''); const icon=isOwner?' 👑':(isSekjen?' 🏛️':''); const qrUrl=getQrUrl(m.number);
   const top=`<div class="${statusClass}"><span class="dot"></span> ${m.status} — ${isOwner?'PEMILIK PORTAL':(isSekjen?'SEKJEN PUSAT DPP':'DATA TERVERIFIKASI')} ${badge}</div>`;
-  const grid=`<div class="grid"><div class="item"><div class="label">Nama</div><div class="value">${m.name}${icon}</div></div><div class="item"><div class="label">Nomor</div><div class="value">${m.number}</div></div><div class="item"><div class="label">Email Driver</div><div class="value">${m.email||'-'}</div></div><div class="item"><div class="label">WA</div><div class="value">${m.wa||'-'}</div></div><div class="item"><div class="label">Status</div><div class="value">${m.level}</div></div><div class="item"><div class="label">Platform</div><div class="value">${m.platform}</div></div></div>`;
-  const qrBox=`<div class="qr-box ${isOwner?'owner':(isSekjen?'sekjen':'')}"><div class="label">QR ANGGOTA - KTA (Bukan QRIS)</div><img src="${qrUrl}" alt="QR ${m.number}"><p style="color:#aaa;font-size:11px;margin-top:10px">QR identitas<br><b>${m.number}</b><br>${m.name}</p><button class="btn" style="margin-top:10px" onclick="downloadQr('${m.number}')">📥 DOWNLOAD QR</button></div>`;
+  const grid=`<div class="grid"><div class="item"><div class="label">Nama</div><div class="value">${m.name}${icon}</div></div><div class="item"><div class="label">Nomor</div><div class="value">${m.number}</div></div><div class="item"><div class="label">Email Driver</div><div class="value">${m.email||'-'}</div></div><div class="item"><div class="label">WA</div><div class="value">${m.wa||'-'}</div></div><div class="item"><div class="label">Status</div><div class="value">${m.level}</div></div><div class="item"><div class="label">Komunitas</div><div class="value">${m.community}</div></div></div>`;
+  const qrBox=`<div class="qr-box ${isOwner?'owner':(isSekjen?'sekjen':'')}"><div class="label">QR ANGGOTA - KTA (Bukan QRIS Pembayaran)</div><img src="${qrUrl}" alt="QR ${m.number}"><p style="color:#aaa;font-size:11px;margin-top:10px">QR identitas anggota<br>Scan untuk verifikasi: <b>${m.number}</b><br>${m.name}</p><p style="color:#666;font-size:10px">Email: ${m.email} | WA: ${m.wa}</p><button class="btn" style="margin-top:10px" onclick="downloadQr('${m.number}')">📥 DOWNLOAD QR ANGGOTA</button></div>`;
   box.className=""; box.innerHTML=top+grid+qrBox; return false;
 }
 
+// Auto login admin jika ada session
 if(localStorage.getItem('lf_admin')){ 
   const role=localStorage.getItem('lf_admin_role')||'owner'; 
   const user=localStorage.getItem('lf_admin_user')||'benny'; 
@@ -686,12 +319,12 @@ if(localStorage.getItem('lf_admin')){
   const inner=document.getElementById('adminPanelInner'); const title=document.getElementById('adminTitle'); const desc=document.getElementById('adminDesc'); 
   if(role==='sekjen'){
     inner.className='admin-panel sekjen'; 
-    title.innerHTML='🏛️ PANEL SEKJEN - Cundhamani Caraka Gana. SE'; 
-    desc.innerHTML='Sekjen: carakagana@gmail.com | WA: 081249060309'; 
+    title.innerHTML='🏛️ PANEL SEKJEN PUSAT DPP - Cundhamani Caraka Gana. SE'; 
+    desc.innerHTML='Login sebagai <b style="color:#8ec2ff">SEKJEN PUSAT DPP - Cundhamani Caraka Gana. SE</b><br>Email: carakagana@gmail.com | WA: 081249060309 - Akses keanggotaan (QR Anggota bukan QRIS bayar)'; 
   } else {
     inner.className='admin-panel';
-    title.innerHTML='🔐 PANEL KETUA - Benny Lefianto Sandi Agung';
-    desc.innerHTML='Ketua: WA 081333556398';
+    title.innerHTML='🔐 PANEL OWNER - Benny Lefianto Sandi Agung';
+    desc.innerHTML='Login sebagai <b style="color:var(--gold2)">OWNER - Benny Lefianto Sandi Agung</b><br>LF-0256-0826 | WA: 081333556398 - Akses penuh';
   }
   setTimeout(renderAll,100); 
 }
@@ -700,5 +333,66 @@ if(params.get("id")){ document.getElementById("memberId").value=params.get("id")
 if(params.get("admin")==="1"){ showLogin(); } 
 if(params.get("daftar")==="1"||params.get("join")==="1"||params.get("tab")==="daftar"){ switchTab('daftar'); }
 </script>
+
+<script>
+// FIX: Pastikan halaman depan selalu Verifikasi, bukan Edit
+document.addEventListener('DOMContentLoaded', ()=>{
+  // Tutup semua box edit yang mungkin kebuka
+  const editBox = document.getElementById('editBox');
+  if(editBox) editBox.className='hidden';
+  const importBox = document.getElementById('importBox');
+  if(importBox) importBox.className='hidden';
+  
+  // Kalau tidak ada param admin/edit/id/daftar, paksa tab verifikasi
+  const p = new URLSearchParams(location.search);
+  if(!p.get('id') && !p.get('admin') && !p.get('edit') && !p.get('daftar') && !p.get('join') && !p.get('tab')){
+    switchTab('verifikasi');
+    // Scroll ke atas
+    window.scrollTo(0,0);
+  }
+  
+  // Hapus param edit dari URL biar tidak stuck di edit
+  if(p.get('edit') && !confirm('Tetap di mode edit anggota?')){
+    history.replaceState(null,'', location.pathname);
+    switchTab('verifikasi');
+  }
+});
+
+function logoutAdmin(){
+  localStorage.removeItem('lf_admin');
+  localStorage.removeItem('lf_admin_role');
+  localStorage.removeItem('lf_admin_user');
+  location.href = location.pathname;
+}
+
+// Override accessMemberDirect biar tidak auto redirect aneh
+const _oldAccess = window.accessMemberDirect;
+if(_oldAccess){
+  window.accessMemberDirect = function(num){
+    // Tutup edit dulu
+    const eb = document.getElementById('editBox');
+    if(eb) eb.className='hidden';
+    _oldAccess(num);
+  }
+}
+</script>
+
 <script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script></body>
 </html>
+
+<script>
+function switchTab(t){
+  // Hide editBox every tab switch
+  const eb = document.getElementById('editBox');
+  if(eb) eb.classList.add('hidden');
+  // Call original if exists
+  if(window.switchTab_original) return window.switchTab_original(t);
+  // Fallback logic
+  document.querySelectorAll('.tab').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(el=>el.classList.add('hidden'));
+  const tabBtn = document.getElementById('tab-'+t);
+  const tabContent = document.getElementById('content-'+t);
+  if(tabBtn) tabBtn.classList.add('active');
+  if(tabContent) tabContent.classList.remove('hidden');
+}
+</script>
