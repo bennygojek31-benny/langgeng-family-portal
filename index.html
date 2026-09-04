@@ -92,11 +92,14 @@ h1{font-size:28px;margin:12px 0 5px;letter-spacing:2px;text-align:center;color:v
     <div class="form-group"><label>Email Driver *</label><input id="dEmail" type="email" placeholder="email di Maxim/inDrive"></div>
     <div class="form-group"><label>No WA *</label><input id="dWa" placeholder="081333556398"></div>
     <div class="form-group"><label>Unit / Korwil</label><input id="dUnit" placeholder="Mojokerto"></div>
-    <div class="form-group"><label>Platform</label><select id="dPlatform"><option value="Maxim">Maxim</option><option value="inDrive">inDrive</option><option value="Gojek">Gojek</option><option value="Grab">Grab</option><option value="Maxim • inDrive" selected>Maxim • inDrive</option></select></div>
-    <div class="form-group"><label>Level</label><select id="dLevel">
-<option value="MEMBER">MEMBER</option>
-<option value="PENGURUS">PENGURUS</option>
+    <div class="form-group"><label>Platform</label><select id="dPlatform">
+<option value="Maxim">Maxim</option>
+<option value="inDrive">inDrive</option>
+<option value="Gojek">Gojek</option>
+<option value="Grab">Grab</option>
+<option value="Shopee Food">Shopee Food</option>
 </select></div>
+    <div class="form-group"><label>Level</label><select id="dLevel"><option value="MEMBER">MEMBER</option><option value="PREMIUM MEMBER">PREMIUM MEMBER</option></select></div>
     <button class="btn" style="width:100%" onclick="daftarMandiri()">DAFTAR SEKARANG</button>
   </div>
 
@@ -115,9 +118,12 @@ h1{font-size:28px;margin:12px 0 5px;letter-spacing:2px;text-align:center;color:v
       <input id="newEmail" type="email" placeholder="Email driver">
       <input id="newWa" placeholder="WA (opsional)">
       <select id="newLevel">
-<option value="MEMBER">MEMBER</option>
-<option value="PENGURUS">PENGURUS</option>
-</select>
+        <option value="MEMBER">MEMBER</option>
+        <option value="PREMIUM MEMBER">PREMIUM MEMBER</option>
+        <option value="PENGURUS">PENGURUS</option>
+        <option value="SEKJEN PUSAT DPP">SEKJEN PUSAT DPP</option>
+        <option value="PEMILIK / OWNER">PEMILIK / OWNER</option>
+      </select>
       <input id="newPlatform" placeholder="Platform (Maxim • inDrive)">
       <button onclick="addMember()">+ TAMBAH & BUAT QR</button>
       <div class="admin-actions">
@@ -335,40 +341,40 @@ if(params.get("daftar")==="1"||params.get("join")==="1"||params.get("tab")==="da
 </script>
 
 <script>
-// === FIX: HANYA 2 LEVEL: MEMBER & PENGURUS ===
+// === FIX PLATFORM: Shopee Food + Pisah Maxim & inDrive ===
 document.addEventListener('DOMContentLoaded', ()=>{
-  function cleanSelects(){
+  const PLATFORMS = ["Maxim","inDrive","Gojek","Grab","Shopee Food"];
+  function cleanPlatformSelects(){
     document.querySelectorAll('select').forEach(sel=>{
-      const txt = sel.innerHTML.toUpperCase();
-      if(txt.includes('MEMBER') || txt.includes('PENGURUS') || txt.includes('SEKJEN') || txt.includes('OWNER')){
-        // Check if it's level/status select
-        const isLevelSelect = sel.id.toLowerCase().includes('level') || 
-                              sel.id.toLowerCase().includes('status') ||
-                              sel.name && sel.name.toLowerCase().includes('level') ||
-                              txt.includes('PENGURUS');
-        if(isLevelSelect){
-          // Save current value
+      const html = sel.innerHTML;
+      const up = html.toUpperCase();
+      // Identify platform select (contains MAXIM/INDRIVE/GOJEK/GRAB/SHOPEE but NOT MEMBER)
+      if((up.includes('MAXIM') || up.includes('INDRIVE') || up.includes('GOJEK') || up.includes('GRAB') || up.includes('SHOPEE')) && !up.includes('MEMBER')){
+        // Check if it still has combined or missing Shopee Food
+        if(html.includes('Maxim • inDrive') || !up.includes('SHOPEE FOOD')){
           const cur = sel.value;
-          sel.innerHTML = '<option value="MEMBER">MEMBER</option><option value="PENGURUS">PENGURUS</option>';
-          // Restore if still valid
-          if(cur==='MEMBER' || cur==='PENGURUS') sel.value = cur;
-          else sel.value = 'MEMBER';
+          sel.innerHTML = PLATFORMS.map(p=>`<option value="${p}">${p}</option>`).join('');
+          // Try keep current if still valid
+          if(PLATFORMS.includes(cur)) sel.value = cur;
+          // If old combined value, split to Maxim
+          if(cur && cur.includes('Maxim') && cur.includes('inDrive')){
+            sel.value = 'Maxim';
+          }
         }
       }
     });
   }
-  cleanSelects();
-  // Run again after 1 sec for dynamically created forms
-  setTimeout(cleanSelects, 1000);
-  setTimeout(cleanSelects, 3000);
+  cleanPlatformSelects();
+  setTimeout(cleanPlatformSelects, 800);
+  setTimeout(cleanPlatformSelects, 2500);
   
-  // Also patch editMember to only show 2 options
+  // Patch any function that creates options
   const origEdit = window.editMember;
   if(origEdit){
-    window.editMember = function(num){
-      const res = origEdit(num);
-      setTimeout(cleanSelects, 200);
-      return res;
+    window.editMember = function(...args){
+      const r = origEdit.apply(this, args);
+      setTimeout(cleanPlatformSelects, 300);
+      return r;
     }
   }
 });
