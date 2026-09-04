@@ -333,13 +333,19 @@ window.renderAll = function(){
 };
 
 window.doOwnerLogin = function(){
-  document.getElementById('ownerPanel').classList.remove('hidden');
-
-  if(Notification && Notification.permission!=='granted' && Notification.permission!=='denied'){
-    Notification.requestPermission();
-  }
-
-  renderAll();
+  try{
+    // Buka tab ketua
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    var tk=document.getElementById('tab-owner'); if(tk) tk.classList.add('active');
+    document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+    var sec=document.getElementById('ownerSection'); if(sec) sec.classList.add('active');
+    // Buka panel
+    var panel=document.getElementById('ownerPanel'); if(panel) panel.classList.remove('hidden');
+    var login=document.getElementById('ownerLogin'); if(login) login.classList.add('hidden');
+    var list=document.getElementById('ownerList'); if(list) list.classList.remove('hidden');
+    console.log('Panel Ketua dibuka via logo 5x');
+    if(typeof renderAll==='function') renderAll();
+  }catch(e){ alert('Error buka Panel Ketua: '+e.message); console.error(e); }
 };
 
 window.logoutOwner = function(){
