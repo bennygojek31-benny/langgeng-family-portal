@@ -274,7 +274,7 @@ window.logoTap5x = function(){
 window.doOwnerLogin = function(){
   const pass=document.getElementById('ownerPass').value.trim();
   const savedPass=localStorage.getItem('lf_owner_pass')||'langgeng123';
-  if(pass===savedPass){ localStorage.setItem('lf_owner_logged','1'); document.getElementById('ownerLogin').classList.add('hidden'); document.getElementById('ownerList').classList.remove('hidden'); alert('✅ Login Ketua Berhasil!'); renderPending(); }else{ alert('❌ Password salah! Default: langgeng123'); }
+  if(pass===savedPass){ localStorage.setItem('lf_owner_logged','1'); document.getElementById('ownerLogin').classList.add('hidden'); document.getElementById('ownerList').classList.remove('hidden'); alert('✅ Login Ketua Berhasil!'); renderPending(); }else{ alert('❌ Password salah!'); }
 }
 window.logoutOwner = function(){ localStorage.removeItem('lf_owner_logged'); document.getElementById('ownerLogin').classList.remove('hidden'); document.getElementById('ownerList').classList.add('hidden'); document.getElementById('ownerSection').classList.add('hidden'); }
 window.gantiPassword = function(){ const oldP=document.getElementById('oldPass').value; const newP=document.getElementById('newPass').value; const saved=localStorage.getItem('lf_owner_pass')||'langgeng123'; if(oldP!==saved){ alert('Password lama salah!'); return; } if(newP.length<4){ alert('Minimal 4 karakter!'); return; } localStorage.setItem('lf_owner_pass', newP); alert('✅ Password diganti: '+newP); }
