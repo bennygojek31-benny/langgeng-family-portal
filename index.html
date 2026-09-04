@@ -138,6 +138,15 @@ body{background:#000;color:#fff;font-family:-apple-system,BlinkMacSystemFont,Seg
       <button class="btn btn-dark" onclick="logoutAnggota()" style="width:auto;padding:6px 12px;font-size:11px">Logout</button>
     </div>
     <div id="loginInfo" style="background:#0a1a0a;border:1px solid #1a4a1a;color:#4ade80;padding:10px;border-radius:10px;margin-bottom:12px;font-size:12px;text-align:center"></div>
+    <div class="card" style="border-color:#1a3a1a;background:#0a0f0a">
+      <div class="card-title">🔑 Ganti Password Saya</div>
+      <input id="oldPassAnggota" class="input" type="password" placeholder="Password Lama (yang sekarang)">
+      <input id="newPassAnggota" class="input" type="password" placeholder="Password Baru (min 4 huruf)">
+      <input id="newPassAnggota2" class="input" type="password" placeholder="Ulangi Password Baru">
+      <button class="btn btn-gold" onclick="gantiPasswordAnggota()" style="margin-top:8px">💾 SIMPAN PASSWORD BARU</button>
+      <div id="gantiPassResult" style="margin-top:10px;font-size:12px;text-align:center"></div>
+      <div style="font-size:10px;color:#666;margin-top:8px;text-align:center">Password kamu buat sendiri, bisa diganti kapan saja</div>
+    </div>
     <div id="allKTA"></div>
   </div>
 </div>
@@ -199,6 +208,28 @@ window.loginAnggota = function(){
   document.getElementById('ktaPage').classList.remove('hidden');
   document.getElementById('loginInfo').innerHTML=`✅ Login: <b>${found.name}</b> (${found.number}) - ${found.level}`;
   renderAllKTA(keyFound);
+}
+window.gantiPasswordAnggota = function(){
+  const key = localStorage.getItem('lf_logged_member');
+  if(!key || !MEMBERS[key]){ alert('Login dulu bro!'); return; }
+  const oldP = document.getElementById('oldPassAnggota').value;
+  const newP = document.getElementById('newPassAnggota').value;
+  const newP2 = document.getElementById('newPassAnggota2').value;
+  const resultDiv = document.getElementById('gantiPassResult');
+  if(!oldP || !newP || !newP2){ alert('Lengkapi Password Lama & Baru!'); return; }
+  if(MEMBERS[key].password !== oldP){ 
+    resultDiv.innerHTML = '<span style="color:#ff6b6b">❌ Password lama salah!</span>';
+    alert('❌ Password lama salah!'); return; 
+  }
+  if(newP.length<4){ alert('Password baru minimal 4 huruf!'); return; }
+  if(newP!==newP2){ resultDiv.innerHTML = '<span style="color:#ff6b6b">❌ Password baru tidak sama!</span>'; alert('Ulangi password baru harus sama!'); return; }
+  MEMBERS[key].password = newP;
+  saveData();
+  resultDiv.innerHTML = '✅ Password berhasil diganti!<br>Password baru: <b>'+newP+'</b><br><span style="color:#888;font-size:10px">Ingat password barumu ya!</span>';
+  document.getElementById('oldPassAnggota').value=''; 
+  document.getElementById('newPassAnggota').value=''; 
+  document.getElementById('newPassAnggota2').value='';
+  alert('✅ Password berhasil diganti jadi: '+newP);
 }
 window.logoutAnggota = function(){
   localStorage.removeItem('lf_logged_member');
